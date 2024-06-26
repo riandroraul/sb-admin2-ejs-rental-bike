@@ -6,9 +6,11 @@ const router = require("./src/Routes/main-route");
 
 dotenv.config();
 require("./src/config/db-connect");
+
 const port = process.env.PORT;
 const app = express();
 
+app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, "public", "assets")));
