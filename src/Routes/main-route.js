@@ -1,21 +1,12 @@
 const { Router } = require("express");
-const {
-  MainView,
-  LoginView,
-  SignupView,
-  ForgotPasswordView,
-} = require("../Controllers/MainController");
+const AuthValidation = require("../auth/validation");
 const { Register, Login } = require("../Controllers/UserController");
+const ValidationMiddleware = require("../Middleware/ValidationMiddleware");
 
 const router = Router();
 
-router.get("/", MainView);
-router.get("/login", LoginView);
-router.get("/signup", SignupView);
-router.get("/forgot-password", ForgotPasswordView);
-
 // user routes
-router.post("/register", Register);
-router.post("/login", Login);
-
+router.post("/register", [AuthValidation.register, ValidationMiddleware], Register);
+router.post("/login", [AuthValidation.login, ValidationMiddleware], Login);
+router.post("forgot-pass");
 module.exports = router;

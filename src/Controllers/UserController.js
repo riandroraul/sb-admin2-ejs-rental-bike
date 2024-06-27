@@ -5,7 +5,11 @@ const jwt = require("jsonwebtoken");
 
 const Register = async (req, res) => {
   try {
-    const { name, email, password } = req.body;
+    const { name, email, password, password2 } = req.body;
+    console.log(req.body);
+    if (password != password2) {
+      throw new Error("password and repeat password must be same!");
+    }
     const hashedPassword = await hashPassword(password);
     const userCreated = await User.create({
       name,
@@ -13,10 +17,14 @@ const Register = async (req, res) => {
       password: hashedPassword,
       role: Number(process.env.ROLE_USER),
     });
-    console.log(userCreated);
-    return res
-      .status(201)
-      .send(responseSuccess(true, 201, "new user created", userCreated));
+
+    const response = responseSuccess(true, 201, "new user created", userCreated);
+    res.render("login", {
+      layout: "public-pages/main",
+      title: "Rental Bike | Login",
+      data: response,
+      errors: [{ success: true, msg: "Create account Successfully" }],
+    });
   } catch (error) {
     return errorResult(error, res, 400);
   }
@@ -24,36 +32,37 @@ const Register = async (req, res) => {
 
 const Login = async (req, res) => {
   try {
-    const { email, password, remember_me } = req.body;
+    const { email, password } = req.body;
     const userExist = await User.findOne({
       where: { email },
     });
+
     if (!userExist) {
       throw new Error("user not found");
     }
+
     const checkPassword = await comparePassword(password, userExist.password);
     if (!checkPassword) {
       throw new Error("email or password wrong!");
     }
+
     const data = {
       name: userExist.name,
       email: userExist.email,
       role: userExist.role,
     };
-    const token = jwt.sign(data, process.env.ACCESS_TOKEN, { expiresIn: "1d" });
-    if (remember_me) {
-      res.cookie("authToken", token, {
-        httpOnly: true,
-        maxAge: 30 * 24 * 60 * 60 * 1000,
-      }); // 30 hari
-    } else {
-      res.cookie("authToken", token, { httpOnly: true });
-    }
-    return res
-      .status(200)
-      .send(responseSuccess(true, 200, "login successfully", { ...data, token }));
+
+    const token = jwt.sign({ userId: userExist.userId }, process.env.ACCESS_TOKEN, {
+      expiresIn: "1d",
+    });
+    res.render("home", {
+      layout: "layouts/main",
+      title: "Rental Bike",
+      data: { ...data, token },
+      errors: [{ success: true, msg: "Login Successfully" }],
+    });
   } catch (error) {
-    return errorResult(error, res, 400);
+    return errorResult(error, res, 400, req.path);
   }
 };
 
