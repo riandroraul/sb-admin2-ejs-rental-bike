@@ -1,7 +1,18 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelizeConnection = require("../../config/db-connect");
+const jwt = require("jsonwebtoken");
 
-class User extends Model {}
+class User extends Model {
+  generateAccessJwt() {
+    const payload = {
+      userId: this.userId,
+      email: this.email,
+      name: this.name,
+      role: this.role,
+    };
+    return jwt.sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "1d" });
+  }
+}
 
 User.init(
   {

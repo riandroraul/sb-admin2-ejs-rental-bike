@@ -12,14 +12,14 @@ const errorResult = (error, res, statusCode, path) => {
         });
       case "register":
         title = "Rental Bike | Registration";
-        return res.status(400).render(pathRender, {
+        return res.status(statusCode).render("signup", {
           layout: "public-pages/main",
           title,
           errors: [{ success: false, msg: error.message }],
         });
       case "forgot-password":
         title = "Rental Bike | Forgot Password";
-        return res.status(400).render(pathRender, {
+        return res.status(statusCode).render(pathRender, {
           layout: "public-pages/main",
           title,
           errors: [{ success: false, msg: error.message }],

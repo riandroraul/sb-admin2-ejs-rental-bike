@@ -1,20 +1,25 @@
 const User = require("../db/models/user");
 const { hashPassword, comparePassword } = require("../utils/password");
 const { responseSuccess, errorResult } = require("../utils/response");
-const jwt = require("jsonwebtoken");
 
 const Register = async (req, res) => {
   try {
     const { name, email, password, password2 } = req.body;
-    console.log(req.body);
+    const checkUser = await User.findOne({ where: { email } });
+
+    if (checkUser) {
+      const error = new Error("User with given email already exist");
+      return errorResult(error, res, 400, req.path);
+    }
+
     if (password != password2) {
       throw new Error("password and repeat password must be same!");
     }
-    const hashedPassword = await hashPassword(password);
+
     const userCreated = await User.create({
       name,
       email,
-      password: hashedPassword,
+      password: await hashPassword(password),
       role: Number(process.env.ROLE_USER),
     });
 
@@ -43,26 +48,24 @@ const Login = async (req, res) => {
 
     const checkPassword = await comparePassword(password, userExist.password);
     if (!checkPassword) {
-      throw new Error("email or password wrong!");
+      throw new Error("Invalid email or password, please try again!");
     }
 
-    const data = {
-      name: userExist.name,
-      email: userExist.email,
-      role: userExist.role,
+    const token = userExist.generateAccessJwt();
+    let options = {
+      maxAge: 20 * 60 * 1000, // would expire in 20minutes
+      httpOnly: true, // The cookie is only accessible by the web server
+      secure: true,
+      sameSite: "None",
     };
-
-    const token = jwt.sign({ userId: userExist.userId }, process.env.ACCESS_TOKEN, {
-      expiresIn: "1d",
-    });
+    res.cookie("SessionID", token, options);
     res.render("home", {
       layout: "layouts/main",
       title: "Rental Bike",
-      data: { ...data, token },
       errors: [{ success: true, msg: "Login Successfully" }],
     });
   } catch (error) {
-    return errorResult(error, res, 400, req.path);
+    return errorResult(error, res, 401, req.path);
   }
 };
 

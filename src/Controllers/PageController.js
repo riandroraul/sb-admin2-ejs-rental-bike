@@ -20,4 +20,24 @@ const ForgotPasswordView = (req, res) => {
   });
 };
 
-module.exports = { MainView, LoginView, SignupView, ForgotPasswordView };
+const DashboardView = (req, res) => {
+  res.render("card", {
+    user: req.user,
+    layout: "layouts/main",
+    title: "Rental Bike | Dashboard",
+  });
+};
+
+const Logout = async (req, res) => {
+  res.clearCookie("SessionID"); // Menghapus cookie yang menyimpan token JWT
+  return res.redirect("/login");
+};
+
+module.exports = {
+  MainView,
+  LoginView,
+  SignupView,
+  ForgotPasswordView,
+  DashboardView,
+  Logout,
+};
