@@ -1,5 +1,5 @@
 const MainView = (req, res) => {
-  res.render("home", { layout: "layouts/main", title: "Rental Bike" });
+  res.render("home", { layout: "layouts/main", user: req.user, title: "Rental Bike" });
 };
 
 const LoginView = (req, res) => {
@@ -21,9 +21,8 @@ const ForgotPasswordView = (req, res) => {
 };
 
 const DashboardView = (req, res) => {
-  res.render("card", {
-    user: req.user,
-    layout: "layouts/main",
+  res.render("landing-page", {
+    layout: "public-pages/main",
     title: "Rental Bike | Dashboard",
   });
 };

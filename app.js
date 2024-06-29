@@ -19,17 +19,17 @@ app.disable("x-powered-by");
 app.use(cookieParser());
 app.use(methodOverride("_method")); // for use method PUT and DELETE
 
-app.use(flash());
+const oneDay = 1000 * 60 * 60 * 24;
+app.use(
+  session({
+    secret: process.env.SESSION_KEY,
+    resave: false,
+    saveUninitialized: true,
+    cookie: { maxAge: oneDay },
+  })
+);
 
-// const oneDay = 1000 * 60 * 60 * 24;
-// app.use(
-//   session({
-//     secret: process.env.SESSION_KEY,
-//     resave: false,
-//     saveUninitialized: true,
-//     cookie: { maxAge: oneDay },
-//   })
-// );
+app.use(flash());
 
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
