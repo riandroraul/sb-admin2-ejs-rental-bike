@@ -1,3 +1,7 @@
+body {
+  padding-top: 60px; /* Adjust based on the height of your navbar */
+}
+
 .landing-page {
   background-image: radial-gradient(circle, rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.6)),
    url("../img/bike2-unsplash.png");

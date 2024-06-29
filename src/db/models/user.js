@@ -1,6 +1,7 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelizeConnection = require("../../config/db-connect");
 const jwt = require("jsonwebtoken");
+const Booking = require("./booking");
 
 class User extends Model {
   generateAccessJwt() {
@@ -46,5 +47,7 @@ User.init(
     underscored: false,
   }
 );
+
+User.hasMany(Booking, { foreignKey: "userId" });
 
 module.exports = User;
