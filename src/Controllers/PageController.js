@@ -1,5 +1,11 @@
 const MainView = (req, res) => {
-  res.render("home", { layout: "layouts/main", title: "Rental Bike" });
+  const data = { name: "john doe", age: 34 };
+  res.render("home", {
+    layout: "layouts/main",
+    user: req.user,
+    data: JSON.stringify(data),
+    title: "Rental Bike",
+  });
 };
 
 const LoginView = (req, res) => {
@@ -21,15 +27,19 @@ const ForgotPasswordView = (req, res) => {
 };
 
 const DashboardView = (req, res) => {
-  res.render("card", {
-    user: req.user,
-    layout: "layouts/main",
+  res.render("landing-page", {
+    layout: "public-pages/main",
     title: "Rental Bike | Dashboard",
   });
 };
 
 const Logout = async (req, res) => {
   res.clearCookie("SessionID"); // Menghapus cookie yang menyimpan token JWT
+  return res.redirect("/login");
+};
+
+const sentJson = (req, res) => {
+  res.json({ nama: "John Doe", umur: 28 });
   return res.redirect("/login");
 };
 
@@ -40,4 +50,5 @@ module.exports = {
   ForgotPasswordView,
   DashboardView,
   Logout,
+  sentJson,
 };

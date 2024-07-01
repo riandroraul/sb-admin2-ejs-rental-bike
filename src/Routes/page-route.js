@@ -11,7 +11,7 @@ const Verify = require("../Middleware/Verify");
 
 const router = Router();
 
-router.get("/", Verify, DashboardView);
+router.get("/", DashboardView);
 router.get("/main", Verify, MainView);
 router.get("/login", LoginView);
 router.get("/register", SignupView);

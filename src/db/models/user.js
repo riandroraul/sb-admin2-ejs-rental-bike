@@ -14,6 +14,8 @@ class User extends Model {
   }
 }
 
+sequelizeConnection.def;
+
 User.init(
   {
     userId: {
@@ -46,5 +48,7 @@ User.init(
     underscored: false,
   }
 );
+
+// User.hasMany(Booking, { as: "bookings", foreignKey: "userId" });
 
 module.exports = User;

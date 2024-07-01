@@ -5,11 +5,12 @@ const Verify = async (req, res, next) => {
     const authHeader = req.headers["cookie"];
     if (!authHeader) {
       res.status(401);
-      // return res.redirect("/login");
+      return res.redirect("/login");
     }
     const cookie = req.cookies.SessionID;
     const decode = jwt.verify(cookie, process.env.ACCESS_TOKEN);
     req.user = decode;
+    res.locals.errors = req.flash("errors");
     next();
   } catch (error) {
     return res.status(401).render("login", {

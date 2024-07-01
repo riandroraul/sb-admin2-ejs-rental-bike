@@ -53,17 +53,19 @@ const Login = async (req, res) => {
 
     const token = userExist.generateAccessJwt();
     let options = {
-      maxAge: 20 * 60 * 1000, // would expire in 20minutes
+      maxAge: 24 * 60 * 60 * 1000, // would expire in 1 day
       httpOnly: true, // The cookie is only accessible by the web server
       secure: true,
       sameSite: "None",
     };
     res.cookie("SessionID", token, options);
-    res.render("home", {
-      layout: "layouts/main",
-      title: "Rental Bike",
-      errors: [{ success: true, msg: "Login Successfully" }],
-    });
+    req.flash("errors", [{ success: true, msg: "Login Successfully" }]);
+    res.redirect("/main");
+    // res.render("home", {
+    //   layout: "layouts/main",
+    //   title: "Rental Bike",
+    //   errors: [{ success: true, msg: "Login Successfully" }],
+    // });
   } catch (error) {
     return errorResult(error, res, 401, req.path);
   }
