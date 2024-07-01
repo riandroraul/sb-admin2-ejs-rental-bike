@@ -14,7 +14,7 @@
   <hr class="sidebar-divider my-0" />
 
   <!-- Nav Item - Dashboard -->
-  <li class="nav-item active">
+  <li class="nav-item <%= path == '/main' ? 'active' : '' %>">
     <a class="nav-link" href="/main">
       <i class="fas fa-fw fa-tachometer-alt"></i>
       <span>Dashboard</span></a
@@ -28,21 +28,23 @@
   <div class="sidebar-heading">Interface</div>
 
   <!-- Nav Item - Utilities Collapse Menu -->
-  <li class="nav-item">
+  <% if(user.role == 1) { %>
+  <li class="nav-item <%= path == '/users' ? 'active' : '' %>">
     <a class="nav-link" href="/users">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <i class="fas fa-fw fa-users"></i>
       <span>Users</span>
     </a>
   </li>
+  <% } %>
   <li class="nav-item">
     <a class="nav-link" href="/bike">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <i class="fas fa-fw fa-bicycle"></i>
       <span>Bicycle</span>
     </a>
   </li>
   <li class="nav-item">
     <a class="nav-link" href="/bike">
-      <i class="fas fa-fw fa-tachometer-alt"></i>
+      <i class="fas fa-fw fa-money-bill"></i>
       <span>Payment method</span>
     </a>
   </li>

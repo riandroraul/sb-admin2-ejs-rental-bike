@@ -16,8 +16,8 @@ const port = process.env.PORT;
 const app = express();
 
 app.disable("x-powered-by");
-app.use(cookieParser());
 app.use(methodOverride("_method")); // for use method PUT and DELETE
+app.use(cookieParser());
 
 const oneDay = 1000 * 60 * 60 * 24;
 app.use(

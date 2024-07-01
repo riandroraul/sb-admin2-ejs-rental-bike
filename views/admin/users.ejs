@@ -1,0 +1,151 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">List of Users</h1>
+  <p class="mb-4">
+    DataTables is a third party plugin that is used to generate the demo table below. For
+    more information about DataTables, please visit the
+    <a target="_blank" href="https://datatables.net">official DataTables documentation</a
+    >.
+  </p>
+
+  <% if(errors.length > 0) { %> <% errors.forEach(function(error) { %>
+  <div
+    class="alert alert-<%= error.success == true ? 'success' : 'danger' %> col-lg-6 alert-dismissible fade show"
+    role="alert"
+  >
+    <%= error.msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% }) %> <% } %>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Email</th>
+              <th>Created At</th>
+              <th>Updated At</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(data.length > 0) { %> <% data.forEach(el => { %>
+            <tr>
+              <td><%= el.name %></td>
+              <td><%= el.email %></td>
+              <td><%= new Date(el.createdAt).toLocaleString('id-ID') %></td>
+              <td><%= new Date(el.updatedAt).toLocaleString('id-ID') %></td>
+              <td>
+                <!-- Button trigger modal -->
+                <a
+                  class="nav-link tampilModalDelete"
+                  id="deleteUser"
+                  href="/delete-user"
+                  data-toggle="modal"
+                  data-userid="<%= el.userId %>"
+                  data-username="<%= el.name %>"
+                  data-email="<%= el.email %>"
+                  data-target="#deleteUserModal"
+                >
+                  <i class="fas fa-fw fa-trash"></i>
+                </a>
+              </td>
+            </tr>
+            <% }); %> <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="deleteUserModal"
+  data-backdrop="static"
+  data-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="deleteUserModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="deleteUserModalLabel">Delete User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure want to delete
+        <span id="userName" class="h5 mb-0 font-weight-bold text-gray-800"></span> with
+        email <span id="userEmail" class="h5 mb-0 font-weight-bold text-gray-800"></span>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-no" class="btn btn-secondary" data-dismiss="modal">
+          No
+        </button>
+        <button type="button" id="confirmDelete" class="btn btn-primary">Yes</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    $("#deleteUserModal").on("show.bs.modal", function (event) {
+      const btn = $(event.relatedTarget);
+      const userId = btn.data("userid");
+      const userName = btn.data("username");
+      const userEmail = btn.data("email");
+      let modal = $(this);
+      modal.find(".modal-body #userName").text(userName);
+      modal.find(".modal-body #userEmail").text(userEmail);
+
+      modal.find(".modal-footer #confirmDelete").data("userid", userId);
+    });
+    $("#confirmDelete").click(async function () {
+      let userId = $(this).data("userid");
+      try {
+        const res = await fetch(`/delete-user/${userId}`, { method: "DELETE" });
+
+        // const data = await res.json();
+        if (res.ok) {
+          console.log("user deleted successfully");
+          $("#deleteUserModal").modal("hide");
+          $("#deleteUserModal").on("hidden.bs.modal", function () {
+            location.reload(); // Refresh the page after the modal is hidden
+          });
+        } else {
+          console.log("failed to delete user");
+        }
+        // console.log(data);
+      } catch (error) {
+        console.log("error delete user: ", error);
+      }
+      // $.ajax({
+      //   url: "/delete-user/" + userId,
+      //   method: "GET",
+      //   type: "GET",
+      //   success: function (res) {
+      //     console.log("respons success");
+      //     $("#deleteUserModal").modal("hide");
+      //   },
+      //   error: function (err) {
+      //     console.error("error deleting user: ", err);
+      //   },
+      // });
+    });
+  });
+</script>

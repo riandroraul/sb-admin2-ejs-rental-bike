@@ -53,7 +53,7 @@ const Login = async (req, res) => {
 
     const token = userExist.generateAccessJwt();
     let options = {
-      maxAge: 24 * 60 * 60 * 1000, // would expire in 1 day
+      maxAge: 24 * 60 * 60 * 1000, // would expire in 1 day, 1s = 1000ms
       httpOnly: true, // The cookie is only accessible by the web server
       secure: true,
       sameSite: "None",
@@ -61,14 +61,39 @@ const Login = async (req, res) => {
     res.cookie("SessionID", token, options);
     req.flash("errors", [{ success: true, msg: "Login Successfully" }]);
     res.redirect("/main");
-    // res.render("home", {
-    //   layout: "layouts/main",
-    //   title: "Rental Bike",
-    //   errors: [{ success: true, msg: "Login Successfully" }],
-    // });
   } catch (error) {
     return errorResult(error, res, 401, req.path);
   }
 };
 
-module.exports = { Register, Login };
+const GetUsers = async (req, res) => {
+  try {
+    const users = await User.findAll({
+      where: { role: 2 },
+      attributes: ["userId", "name", "email", "role", "createdAt", "updatedAt"],
+      raw: true,
+    });
+    return res.render("admin/users", {
+      layout: "layouts/main",
+      title: "Rental Bike | Users",
+      path: "/users",
+      user: req.user,
+      data: users,
+    });
+  } catch (error) {
+    return errorResult(error, res, 400, req.path);
+  }
+};
+
+const DeleteUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    await User.destroy({ where: { userId } });
+    req.flash("errors", [{ success: true, msg: "User Deleted Successfully" }]);
+    return res.status(200).json({ msg: "User Deleted Successfully" });
+  } catch (error) {
+    return errorResult(error, res, 400, req.path);
+  }
+};
+
+module.exports = { Register, Login, GetUsers, DeleteUser };

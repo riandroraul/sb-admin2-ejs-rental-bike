@@ -1,8 +1,10 @@
 const MainView = (req, res) => {
   const data = { name: "john doe", age: 34 };
+  console.log(req.path);
   res.render("home", {
     layout: "layouts/main",
     user: req.user,
+    path: "/main",
     data: JSON.stringify(data),
     title: "Rental Bike",
   });

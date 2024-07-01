@@ -1,6 +1,10 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelizeConnection = require("../../config/db-connect");
 const jwt = require("jsonwebtoken");
+const dayjs = require("dayjs");
+
+require("dayjs/locale/id");
+dayjs.locale("id");
 
 class User extends Model {
   generateAccessJwt() {
@@ -40,6 +44,18 @@ User.init(
     role: {
       allowNull: false,
       type: DataTypes.BIGINT,
+    },
+    createdAt: {
+      type: DataTypes.DATE,
+      get() {
+        return dayjs(this.getDataValue("createdAt")).format("D MMMM YYYY HH:mm:ss");
+      },
+    },
+    updatedAt: {
+      type: DataTypes.DATE,
+      get() {
+        return dayjs(this.getDataValue("updatedAt")).format("D MMMM YYYY HH:mm:ss");
+      },
     },
   },
   {
