@@ -2,21 +2,27 @@
 /** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
-    await queryInterface.createTable("Booking_statuses", {
-      id: {
+    await queryInterface.createTable("Payments", {
+      payment_id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
-        type: Sequelize.INTEGER,
+        unique: true,
+        type: Sequelize.STRING,
       },
-      booking_status_id: {
-        type: Sequelize.INTEGER,
-      },
-      bike_id: {
+      booking_id: {
         type: Sequelize.INTEGER,
       },
       status: {
-        type: Sequelize.ENUM("Selesai", "Menunggu Pembayaran", "Sudah dibayar"),
+        type: Sequelize.STRING,
+      },
+      total_amount: {
+        type: Sequelize.STRING,
+      },
+      payment_date: {
+        type: Sequelize.DATE,
+      },
+      payment_mmethod: {
+        type: Sequelize.STRING,
       },
       createdAt: {
         allowNull: false,
@@ -29,6 +35,6 @@ module.exports = {
     });
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Booking_statuses");
+    await queryInterface.dropTable("Payments");
   },
 };

@@ -1,7 +1,6 @@
 const { Model, DataTypes } = require("sequelize");
 const sequelizeConnection = require("../../config/db-connect");
 const jwt = require("jsonwebtoken");
-const Booking = require("./booking");
 
 class User extends Model {
   generateAccessJwt() {
@@ -14,6 +13,8 @@ class User extends Model {
     return jwt.sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "1d" });
   }
 }
+
+sequelizeConnection.def;
 
 User.init(
   {
@@ -48,6 +49,6 @@ User.init(
   }
 );
 
-User.hasMany(Booking, { foreignKey: "userId" });
+// User.hasMany(Booking, { as: "bookings", foreignKey: "userId" });
 
 module.exports = User;

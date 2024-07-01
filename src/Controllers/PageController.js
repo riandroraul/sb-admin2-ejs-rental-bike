@@ -1,5 +1,11 @@
 const MainView = (req, res) => {
-  res.render("home", { layout: "layouts/main", user: req.user, title: "Rental Bike" });
+  const data = { name: "john doe", age: 34 };
+  res.render("home", {
+    layout: "layouts/main",
+    user: req.user,
+    data: JSON.stringify(data),
+    title: "Rental Bike",
+  });
 };
 
 const LoginView = (req, res) => {
@@ -32,6 +38,11 @@ const Logout = async (req, res) => {
   return res.redirect("/login");
 };
 
+const sentJson = (req, res) => {
+  res.json({ nama: "John Doe", umur: 28 });
+  return res.redirect("/login");
+};
+
 module.exports = {
   MainView,
   LoginView,
@@ -39,4 +50,5 @@ module.exports = {
   ForgotPasswordView,
   DashboardView,
   Logout,
+  sentJson,
 };

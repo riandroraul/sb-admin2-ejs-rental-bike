@@ -5,7 +5,7 @@ class Bicycle extends Model {}
 
 Bicycle.init(
   {
-    bicycle_id: {
+    bike_id: {
       allowNull: false,
       primaryKey: true,
       autoIncrement: true,

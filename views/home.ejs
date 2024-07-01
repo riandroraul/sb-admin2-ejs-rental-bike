@@ -91,12 +91,15 @@
   </div>
 </div>
 
-<script>
+<script data-data="<%= JSON.stringify(data) %>">
   // $(document).ready(function () {
   //   fetch("/main", { method: "GET" }).then((res) => {
   //     console.log(res);
   //   });
   // });
-  console.log(window.location.pathname);
-  $.getJSON(window.location.pathname).then((res) => console.log(res));
+  // console.log(window.location.pathname);
+  // $.getJSON(window.location.pathname).then((res) => console.log(res));
+  let data2 = JSON.parse(document.currentScript.dataset.data);
+  let obj = JSON.parse(data2);
+  console.log("user: ", obj);
 </script>
