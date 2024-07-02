@@ -1,0 +1,128 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-4 text-gray-800">Add New Bike</h1>
+
+  <!-- Add Bike Form -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Bike Details</h6>
+    </div>
+    <div class="card-body">
+      <form action="/add-new-bike" method="POST" enctype="multipart/form-data">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="bikeName">Bike Name</label>
+            <input
+              type="text"
+              class="form-control"
+              id="bikeName"
+              name="bikeName"
+              placeholder="electric bike 1"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="price">Price / hour</label>
+            <input
+              type="number"
+              class="form-control"
+              id="price"
+              name="price"
+              placeholder="ex: 50000"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="year">Year</label>
+            <input
+              type="number"
+              class="form-control"
+              id="year"
+              name="year"
+              placeholder="year release ex: 2023"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="battery">Battery</label>
+            <input
+              type="text"
+              class="form-control"
+              id="battery"
+              name="battery"
+              placeholder="ex: 48V 20Ah (Removable Baterry)"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="weight">Weight</label>
+            <input
+              type="text"
+              class="form-control"
+              id="weight"
+              name="weight"
+              placeholder="ex: 58 kg"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="max_speed">Max Speed</label>
+            <input
+              type="text"
+              class="form-control"
+              id="max_speed"
+              name="max_speed"
+              placeholder="ex: 40 km/h"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="shifter">Shifter</label>
+            <input
+              type="text"
+              class="form-control"
+              id="shifter"
+              name="shifter"
+              placeholder="ex: 6 level kecepatan"
+            />
+          </div>
+          <div class="form-group col-md-6">
+            <label for="motor">Motor</label>
+            <input
+              type="text"
+              class="form-control"
+              id="motor"
+              name="motor"
+              placeholder="ex: 500W"
+            />
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="image" class="">URL Image (200x150px)</label>
+            <textarea
+              class="form-control"
+              id="url_image"
+              name="url_image"
+              rows="3"
+              placeholder="ex: https://res.cloudinary.com/image3_eotkjz.png"
+            ></textarea>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="description">Description</label>
+            <textarea
+              class="form-control"
+              id="desc"
+              name="desc"
+              rows="3"
+              placeholder="ex: bike description"
+            ></textarea>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Add Bike</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->

@@ -12,13 +12,13 @@ module.exports = {
       bike_name: {
         type: Sequelize.STRING,
       },
-      harga: {
+      price: {
         type: Sequelize.STRING,
       },
-      baterai: {
+      battery: {
         type: Sequelize.STRING,
       },
-      tahun: {
+      year: {
         type: Sequelize.STRING,
       },
       desc: {
@@ -27,17 +27,17 @@ module.exports = {
       motor: {
         type: Sequelize.STRING,
       },
-      kecepatan_maks: {
+      max_speed: {
         type: Sequelize.STRING,
       },
       shifter: {
         type: Sequelize.STRING,
       },
-      bobot: {
+      weight: {
         type: Sequelize.INTEGER,
       },
       url_image: {
-        type: Sequelize.STRING,
+        type: Sequelize.TEXT,
       },
       createdAt: {
         allowNull: false,

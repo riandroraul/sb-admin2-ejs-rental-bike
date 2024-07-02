@@ -6,10 +6,11 @@ const {
   ForgotPasswordView,
   Logout,
   DashboardView,
+  BikesView,
+  AddBikeView,
 } = require("../Controllers/PageController");
 const Verify = require("../Middleware/Verify");
 const VerifyIsAdmin = require("../Middleware/VerifyIsAdmin");
-const { GetUsers, DeleteUser } = require("../Controllers/UserController");
 
 const router = Router();
 
@@ -21,7 +22,7 @@ router.get("/logout", Logout);
 
 router.get("/main", Verify, MainView);
 
-router.get("/users", Verify, VerifyIsAdmin, GetUsers);
-router.delete("/delete-user/:userId", Verify, VerifyIsAdmin, DeleteUser);
+router.get("/bikes", Verify, BikesView);
+router.get("/add-bike", Verify, VerifyIsAdmin, AddBikeView);
 
 module.exports = router;

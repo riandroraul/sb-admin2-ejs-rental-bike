@@ -13,6 +13,7 @@ class User extends Model {
       email: this.email,
       name: this.name,
       role: this.role,
+      member_since: this.createdAt,
     };
     return jwt.sign(payload, process.env.ACCESS_TOKEN, { expiresIn: "1d" });
   }

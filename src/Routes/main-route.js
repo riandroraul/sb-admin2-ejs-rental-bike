@@ -1,8 +1,15 @@
 const { Router } = require("express");
 const AuthValidation = require("../auth/validation");
-const { Register, Login } = require("../Controllers/UserController");
+const {
+  Register,
+  Login,
+  GetUsers,
+  DeleteUser,
+} = require("../Controllers/UserController");
 const ValidationMiddleware = require("../Middleware/ValidationMiddleware");
 const { sentJson } = require("../Controllers/PageController");
+const VerifyIsAdmin = require("../Middleware/VerifyIsAdmin");
+const Verify = require("../Middleware/Verify");
 
 const router = Router();
 
@@ -11,4 +18,8 @@ router.post("/register", [AuthValidation.register, ValidationMiddleware], Regist
 router.post("/login", [AuthValidation.login, ValidationMiddleware], Login);
 router.post("/forgot-password", sentJson);
 // router.get("/sent-json", sentJson);
+
+router.get("/users", Verify, VerifyIsAdmin, GetUsers);
+router.delete("/delete-user/:userId", Verify, VerifyIsAdmin, DeleteUser);
+
 module.exports = router;

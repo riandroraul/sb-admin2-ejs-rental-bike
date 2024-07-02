@@ -1,12 +1,16 @@
+const formatDate = require("../utils/formatDate");
+
 const MainView = (req, res) => {
-  const data = { name: "john doe", age: 34 };
-  console.log(req.path);
-  res.render("home", {
+  // const data = { name: "john doe", age: 34 };
+  // console.log(req.path);
+  const user = req.user;
+  const view = user.role == 1 ? "admin/dashboard" : "users/dashboard";
+  res.render(view, {
     layout: "layouts/main",
-    user: req.user,
+    user,
+    member_since: formatDate(user.member_since),
     path: "/main",
-    data: JSON.stringify(data),
-    title: "Rental Bike",
+    title: "Rental Bike | Dashboard",
   });
 };
 
@@ -45,6 +49,24 @@ const sentJson = (req, res) => {
   return res.redirect("/login");
 };
 
+const BikesView = (req, res) => {
+  res.render("bikes", {
+    layout: "layouts/main",
+    title: "Rental Bike | Bikes",
+    user: req.user,
+    path: "/bikes",
+  });
+};
+
+const AddBikeView = (req, res) => {
+  res.render("admin/add-bike", {
+    layout: "layouts/main",
+    title: "Rental Bike | Add Bike",
+    user: req.user,
+    path: "/bikes",
+  });
+};
+
 module.exports = {
   MainView,
   LoginView,
@@ -53,4 +75,6 @@ module.exports = {
   DashboardView,
   Logout,
   sentJson,
+  BikesView,
+  AddBikeView,
 };

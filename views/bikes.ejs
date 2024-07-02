@@ -1,0 +1,112 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mx-5 mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Daftar Sepeda</h1>
+    <a href="/add-bike" class="btn btn-primary btn-icon-split btn-md">
+      <span class="icon text-white-50">
+        <i class="fas fa-plus"></i>
+      </span>
+      <span class="text">Add New Bike</span>
+    </a>
+  </div>
+  <% if(errors.length > 0) { %> <% errors.forEach(function(error) { %>
+  <div
+    class="alert alert-<%= error.success == true ? 'success' : 'danger' %> col-lg-6 alert-dismissible fade show"
+    role="alert"
+  >
+    <%= error.msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% }) %> <% } %>
+
+  <!-- Content Row -->
+
+  <div class="row justify-content-around">
+    <div class="card shadow col-lg-5 mx-1 mb-4">
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Basic Card Example</h6>
+      </div>
+      <div class="card-body">
+        The styling for this basic card example is created by using default Bootstrap
+        utility classes. By using utility classes, the style of the card component can be
+        easily modified with no need for any custom CSS!
+      </div>
+    </div>
+    <div class="card shadow col-lg-5 mx-1 mb-4">
+      <a href="">
+        <!-- image 200 x 150 px -->
+        <img src="img/bike-goda2.png" class="card-img-top" alt="Sepeda 1" />
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Sepeda A</h6>
+          <p class="m-0">Harga: Rp 1.000.000</p>
+        </div>
+      </a>
+      <div class="card-body">
+        <!-- <p><strong>Baterai:</strong> 500Wh</p>
+        <p><strong>Bobot:</strong> 15kg</p>
+        <p><strong>Kecepatan Maks:</strong> 25 km/jam</p>
+        <p><strong>Shifter:</strong> Shimano 7-speed</p>
+        <p><strong>Motor:</strong> 250W</p>
+        <p><strong>Tahun:</strong> 2024</p>
+        <p>
+          <strong>Deskripsi:</strong> Sepeda listrik yang ringan dan cepat, cocok untuk
+          perjalanan sehari-hari.
+        </p> -->
+        <a
+          href="#"
+          class="btn btn-rent btn-block"
+          data-toggle="modal"
+          data-target="#rentModal"
+        >
+          Rent Now <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<div
+  class="modal fade"
+  id="rentModal"
+  tabindex="-1"
+  role="dialog"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Select "Logout" below if you are ready to end your current session.
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">
+          Cancel
+        </button>
+        <a class="btn btn-primary" href="/logout">Logout</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- <script data-data="< JSON.stringify(data) %>">
+  $(document).ready(function () {
+    fetch("/main", { method: "GET" }).then((res) => {
+      console.log(res);
+    });
+  });
+  console.log(window.location.pathname);
+  $.getJSON(window.location.pathname).then((res) => console.log(res));
+  let data2 = JSON.parse(document.currentScript.dataset.data);
+  let obj = JSON.parse(data2);
+  console.log("user: ", obj);
+</script> -->

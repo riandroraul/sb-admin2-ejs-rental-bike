@@ -27,6 +27,14 @@ const ValidationMiddleware = async (req, res, next) => {
           title,
           errors: errors.array(),
         });
+      case "add-new-bike":
+        title = "Rental Bike | Add New Bike";
+        return res.status(422).render("admin/add-bike", {
+          layout: "layouts/main",
+          title,
+          path: "/bikes",
+          errors: errors.array(),
+        });
     }
   }
   next();
