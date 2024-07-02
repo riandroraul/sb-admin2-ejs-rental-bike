@@ -29,6 +29,7 @@ const errorResult = (error, res, statusCode, path) => {
         return res.status(statusCode).render("add-bike", {
           layout: "layouts/main",
           title,
+          // path: "/bikes",
           errors: [{ success: false, msg: error.message }],
         });
     }

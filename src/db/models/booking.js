@@ -19,9 +19,9 @@ Booking.init(
     userId: {
       type: DataTypes.INTEGER,
     },
-    tgl_booking: { type: DataTypes.DATE },
-    jam_mulai: { type: DataTypes.TIME },
-    jam_selesai: { type: DataTypes.TIME },
+    booking_date: { type: DataTypes.DATE },
+    time_start: { type: DataTypes.TIME },
+    time_end: { type: DataTypes.TIME },
   },
   {
     timestamps: true,

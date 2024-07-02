@@ -10,6 +10,7 @@ const ValidationMiddleware = require("../Middleware/ValidationMiddleware");
 const { sentJson } = require("../Controllers/PageController");
 const VerifyIsAdmin = require("../Middleware/VerifyIsAdmin");
 const Verify = require("../Middleware/Verify");
+const { CreateBicycle } = require("../Controllers/BicycleController");
 
 const router = Router();
 
@@ -21,5 +22,6 @@ router.post("/forgot-password", sentJson);
 
 router.get("/users", Verify, VerifyIsAdmin, GetUsers);
 router.delete("/delete-user/:userId", Verify, VerifyIsAdmin, DeleteUser);
+router.post("/addNewBike", CreateBicycle);
 
 module.exports = router;

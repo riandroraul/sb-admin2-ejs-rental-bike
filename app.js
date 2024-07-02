@@ -9,19 +9,13 @@ const cookieParser = require("cookie-parser");
 const router = require("./src/Routes/main-route");
 const pageRouter = require("./src/Routes/page-route");
 const bikeRouter = require("./src/Routes/bike-route");
-const bodyParser = require("body-parser");
 
 dotenv.config();
 require("./src/config/db-connect");
 
-const port = process.env.PORT;
+const port = process.env.PORT || 3000;
 const app = express();
 
-app.use(
-  bodyParser.urlencoded({
-    extended: true,
-  })
-);
 app.disable("x-powered-by");
 app.use(methodOverride("_method")); // for use method PUT and DELETE
 app.use(cookieParser());
@@ -43,9 +37,9 @@ app.set("view engine", "ejs");
 app.use(expressLayouts);
 app.use(express.static(path.join(__dirname, "public", "assets")));
 
-app.use(bikeRouter);
 app.use(router);
 app.use(pageRouter);
+app.use(bikeRouter);
 
 app.listen(port, () => {
   console.log(`Server running at http://localhost:${port}`);

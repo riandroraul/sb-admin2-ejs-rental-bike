@@ -3,6 +3,17 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mx-5 mb-4">
     <h1 class="h3 mb-0 text-gray-800">Daftar Sepeda</h1>
+    <% if(errors.length > 0) { %> <% errors.forEach(function(error) { %>
+    <div
+      class="alert alert-<%= error.success == true ? 'success' : 'danger' %> col-lg-6 alert-dismissible fade show"
+      role="alert"
+    >
+      <%= error.msg %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% }) %> <% } %>
     <a href="/add-bike" class="btn btn-primary btn-icon-split btn-md">
       <span class="icon text-white-50">
         <i class="fas fa-plus"></i>
@@ -10,17 +21,6 @@
       <span class="text">Add New Bike</span>
     </a>
   </div>
-  <% if(errors.length > 0) { %> <% errors.forEach(function(error) { %>
-  <div
-    class="alert alert-<%= error.success == true ? 'success' : 'danger' %> col-lg-6 alert-dismissible fade show"
-    role="alert"
-  >
-    <%= error.msg %>
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-  </div>
-  <% }) %> <% } %>
 
   <!-- Content Row -->
 

@@ -21,7 +21,7 @@ module.exports = {
       payment_date: {
         type: Sequelize.DATE,
       },
-      payment_mmethod: {
+      payment_method: {
         type: Sequelize.STRING,
       },
       createdAt: {

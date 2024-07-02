@@ -11,6 +11,7 @@ const ValidationMiddleware = async (req, res, next) => {
         return res.status(422).render("login", {
           layout: "public-pages/main",
           title,
+          formData: req.body,
           errors: errors.array(),
         });
       case "register":
@@ -18,6 +19,7 @@ const ValidationMiddleware = async (req, res, next) => {
         return res.status(422).render("signup", {
           layout: "public-pages/main",
           title,
+          formData: req.body,
           errors: errors.array(),
         });
       case "forgot-password":
@@ -25,6 +27,7 @@ const ValidationMiddleware = async (req, res, next) => {
         return res.status(422).render("forgot-password", {
           layout: "public-pages/main",
           title,
+          formData: req.body,
           errors: errors.array(),
         });
       case "add-new-bike":
@@ -32,7 +35,9 @@ const ValidationMiddleware = async (req, res, next) => {
         return res.status(422).render("admin/add-bike", {
           layout: "layouts/main",
           title,
+          formData: req.body,
           path: "/bikes",
+          user: req.user,
           errors: errors.array(),
         });
     }

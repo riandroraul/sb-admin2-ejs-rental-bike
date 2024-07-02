@@ -15,13 +15,13 @@ module.exports = {
       userId: {
         type: Sequelize.INTEGER,
       },
-      tgl_booking: {
+      booking_date: {
         type: Sequelize.DATE,
       },
-      jam_mulai: {
+      time_start: {
         type: Sequelize.TIME,
       },
-      jam_selesai: {
+      time_end: {
         type: Sequelize.TIME,
       },
       createdAt: {

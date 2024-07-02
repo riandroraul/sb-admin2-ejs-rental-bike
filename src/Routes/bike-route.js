@@ -11,7 +11,7 @@ router.post(
   "/add-new-bike",
   Verify,
   VerifyIsAdmin,
-  // [BikeValidation.addBike, ValidationMiddleware],
+  [BikeValidation.addBike, ValidationMiddleware],
   CreateBicycle
 );
 
