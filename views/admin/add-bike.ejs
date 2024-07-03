@@ -148,7 +148,7 @@
         </div>
         <div class="form-row">
           <div class="form-group col-md-6">
-            <label for="image" class="">URL Image (200x150px)</label>
+            <label for="url_image" class="">URL Image (200x150px)</label>
             <textarea
               class="form-control <%= errors.find(e => e.path === 'url_image') ? 'is-invalid' : '' %>"
               id="url_image"
@@ -164,7 +164,7 @@
             <% } %>
           </div>
           <div class="form-group col-md-6">
-            <label for="description">Description</label>
+            <label for="desc">Description</label>
             <textarea
               class="form-control <%= errors.find(e => e.path === 'desc') ? 'is-invalid' : '' %>"
               id="desc"

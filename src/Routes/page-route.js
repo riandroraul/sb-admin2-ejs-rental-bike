@@ -6,7 +6,6 @@ const {
   ForgotPasswordView,
   Logout,
   DashboardView,
-  BikesView,
   AddBikeView,
 } = require("../Controllers/PageController");
 const Verify = require("../Middleware/Verify");
@@ -22,7 +21,6 @@ router.get("/logout", Logout);
 
 router.get("/main", Verify, MainView);
 
-router.get("/bikes", Verify, BikesView);
 router.get("/add-bike", Verify, VerifyIsAdmin, AddBikeView);
 
 module.exports = router;

@@ -1,0 +1,120 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <div class="row">
+    <!-- Left Card: Bike Details -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow mb-4">
+        <img
+          src="<%= bike.url_image %>"
+          class="card-img-top"
+          alt="<%= bike.bike_name %>"
+        />
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary"><%= bike.bike_name %></h6>
+          <p class="m-0"><%= bike.formattedPrice %></p>
+        </div>
+        <div class="card-body">
+          <p><strong>Year:</strong> <%= bike.year %></p>
+          <p><strong>Battery:</strong> <%= bike.battery %></p>
+          <p><strong>Weight:</strong> <%= bike.weight %></p>
+          <p><strong>Max Speed:</strong> <%= bike.max_speed %></p>
+          <p><strong>Shifter:</strong> <%= bike.shifter %></p>
+          <p><strong>Motor:</strong> <%= bike.motor %></p>
+          <p><strong>Description:</strong> <%= bike.desc %></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Card: Booking Form -->
+    <div class="col-lg-6 mb-4">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Book This Bike</h6>
+        </div>
+        <div class="card-body">
+          <form method="post" action="/book-now">
+            <input
+              type="hidden"
+              class="form-control"
+              value="<%= user.userId %>"
+              id="user_id"
+              name="user_id"
+            />
+            <input type="hidden" name="bike_id" value="<%= bike.bike_id %>" />
+            <div class="form-group">
+              <label for="date">Booking Date</label>
+              <input type="date" class="form-control" id="date" name="date" />
+            </div>
+            <div class="form-group">
+              <label for="time-start">Time Start</label>
+              <input
+                type="time"
+                class="form-control"
+                id="time-start"
+                name="time-start"
+                min="07:00"
+                max="17:00"
+                step="3600"
+              />
+            </div>
+            <div class="form-group">
+              <label for="time-end">Time End</label>
+              <input
+                type="time"
+                class="form-control"
+                id="time-end"
+                name="time-end"
+                min="08:00"
+                max="17:00"
+                step="3600"
+              />
+            </div>
+            <div class="form-group">
+              <label for="total-amount">Total Amount</label>
+              <input
+                type="text"
+                class="form-control"
+                id="total-amount"
+                name="total-amount"
+                readonly
+              />
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block">Book Now</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<script>
+  $(function () {
+    $("#time-end").on("keyup", function () {
+      const price = "<%= bike.price %>";
+      const priceToInt = parseInt(price);
+
+      const date = $("input[type=date][name=date]").val();
+      const timeStart = $("input[type=time][name=time-start]").val();
+      const timeEnd = $("input[type=time][name=time-end]").val();
+
+      // Combine date and time to create full Date objects
+      const startDateTime = new Date(`${date}T${timeStart}:00`);
+      const endDateTime = new Date(`${date}T${timeEnd}:00`);
+
+      // Calculate the difference in milliseconds
+      const differenceInMilliseconds = endDateTime - startDateTime;
+
+      // Convert milliseconds to hours and minutes
+      const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
+      const differenceInHours = Math.floor(differenceInMinutes / 60);
+
+      console.log(differenceInHours);
+      const totalAmount = differenceInHours * priceToInt;
+      const toIDR = "IDR " + totalAmount.toLocaleString("id-ID");
+      console.log(totalAmount);
+      $("input[type=text][name=total-amount]").val(toIDR);
+    });
+  });
+</script>

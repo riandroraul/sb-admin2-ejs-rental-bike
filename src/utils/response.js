@@ -26,10 +26,11 @@ const errorResult = (error, res, statusCode, path) => {
         });
       case "add-new-bike":
         title = "Rental Bike | Add new Bike";
-        return res.status(statusCode).render("add-bike", {
+        return res.status(statusCode).render("admin/add-bike", {
           layout: "layouts/main",
           title,
-          // path: "/bikes",
+          path: "/bikes",
+          FormData: {},
           errors: [{ success: false, msg: error.message }],
         });
     }

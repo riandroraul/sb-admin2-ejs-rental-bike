@@ -1,5 +1,9 @@
 const { Router } = require("express");
-const { CreateBicycle } = require("../Controllers/BicycleController");
+const {
+  CreateBicycle,
+  GetBicycles,
+  GetBicycleById,
+} = require("../Controllers/BicycleController");
 const Verify = require("../Middleware/Verify");
 const VerifyIsAdmin = require("../Middleware/VerifyIsAdmin");
 const BikeValidation = require("../auth/bike-validation");
@@ -14,5 +18,8 @@ router.post(
   [BikeValidation.addBike, ValidationMiddleware],
   CreateBicycle
 );
+
+router.get("/bikes", Verify, GetBicycles);
+router.get("/bike/:bike_id", Verify, GetBicycleById);
 
 module.exports = router;

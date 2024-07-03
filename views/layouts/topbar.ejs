@@ -1,9 +1,11 @@
 <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+  <!-- Sidebar Toggle (Topbar) -->
+  <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
+    <i class="fa fa-bars"></i>
+  </button>
+
   <!-- Topbar Search -->
   <div class="row mx-4">
-    <% if(user.role == 1) { %>
-    <h4 class="mr-4">Admin Panel</h4>
-    <% } %>
     <form
       class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search"
     >
@@ -78,7 +80,7 @@
         aria-expanded="false"
       >
         <span class="mr-2 d-none d-lg-inline text-gray-600 small"><%= user.name %></span>
-        <img class="img-profile rounded-circle" src="img/undraw_profile.svg" />
+        <img class="img-profile rounded-circle" src="/img/undraw_profile.svg" />
       </a>
       <!-- Dropdown - User Information -->
       <div

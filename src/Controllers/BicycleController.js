@@ -1,8 +1,32 @@
 const Bicycle = require("../db/models/bicycle");
-const { errorResult } = require("../utils/response");
+const formatIDR = require("../utils/formatIDR");
 
 const GetBicycles = async (req, res) => {
   try {
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 4;
+    const offset = (page - 1) * limit;
+
+    const { count, rows } = await Bicycle.findAndCountAll({
+      offset: offset,
+      limit: limit,
+    });
+
+    const formattedBikes = rows.map((bike) => ({
+      ...bike.dataValues,
+      formattedPrice: formatIDR(bike.price),
+    }));
+
+    return res.status(200).render("bikes", {
+      bikes: formattedBikes,
+      totalPages: Math.ceil(count / limit),
+      currentPage: page,
+      layout: "layouts/main",
+      title: "Rental Bike | Bikes",
+      user: req.user,
+      path: "/bikes",
+      limit,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -10,16 +34,32 @@ const GetBicycles = async (req, res) => {
 
 const GetBicycleById = async (req, res) => {
   try {
-  } catch (error) {}
+    const { bike_id } = req.params;
+    const bike = await Bicycle.findOne({ where: { bike_id }, raw: true });
+    const formattedBike = {
+      ...bike,
+      formattedPrice: formatIDR(bike.price),
+    };
+    return res.render("check-booking", {
+      layout: "layouts/main",
+      bike: formattedBike,
+      title: "Rental Bike | Bike",
+      user: req.user,
+      path: "/bikes",
+    });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 const CreateBicycle = async (req, res) => {
   try {
-    await Bicycle.create(req.body);
+    const created = await Bicycle.create(req.body);
+    console.log(created);
     req.flash("errors", [{ success: true, msg: "Successfully, New Bike added!" }]);
     return res.redirect("/bikes");
   } catch (error) {
-    return errorResult(error, res, 400, req.path);
+    console.log(error);
   }
 };
 

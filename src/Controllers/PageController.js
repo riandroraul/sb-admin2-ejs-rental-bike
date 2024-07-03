@@ -64,6 +64,7 @@ const AddBikeView = (req, res) => {
     title: "Rental Bike | Add Bike",
     user: req.user,
     path: "/bikes",
+    formData: {},
   });
 };
 
