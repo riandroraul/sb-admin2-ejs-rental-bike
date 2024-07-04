@@ -8,9 +8,11 @@ Payment.init(
   {
     payment_id: {
       type: DataTypes.STRING,
+      allowNull: false,
     },
     booking_id: {
       type: Sequelize.INTEGER,
+      allowNull: false,
     },
     status: {
       type: Sequelize.STRING,

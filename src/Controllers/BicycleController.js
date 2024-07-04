@@ -43,7 +43,8 @@ const GetBicycleById = async (req, res) => {
     return res.render("check-booking", {
       layout: "layouts/main",
       bike: formattedBike,
-      title: "Rental Bike | Bike",
+      title: "Rental Bike | Booking",
+      formData: req.body,
       user: req.user,
       path: "/bikes",
     });

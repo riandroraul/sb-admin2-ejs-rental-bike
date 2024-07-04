@@ -13,13 +13,14 @@
         <span aria-hidden="true">&times;</span>
       </button>
     </div>
-    <% }) %> <% } %>
+    <% }) %> <% } %> <% if(user.role === 1) {%>
     <a href="/add-bike" class="btn btn-primary btn-icon-split btn-md">
       <span class="icon text-white-50">
         <i class="fas fa-plus"></i>
       </span>
       <span class="text">Add New Bike</span>
     </a>
+    <% } %>
   </div>
 
   <!-- Content Row -->

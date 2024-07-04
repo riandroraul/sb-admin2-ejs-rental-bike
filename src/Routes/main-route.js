@@ -11,6 +11,7 @@ const { sentJson } = require("../Controllers/PageController");
 const VerifyIsAdmin = require("../Middleware/VerifyIsAdmin");
 const Verify = require("../Middleware/Verify");
 const { CreateBicycle } = require("../Controllers/BicycleController");
+const GetTransactionToken = require("../Controllers/PaymentController");
 
 const router = Router();
 
@@ -23,5 +24,8 @@ router.post("/forgot-password", sentJson);
 router.get("/users", Verify, VerifyIsAdmin, GetUsers);
 router.delete("/delete-user/:userId", Verify, VerifyIsAdmin, DeleteUser);
 router.post("/addNewBike", CreateBicycle);
+
+// transaction
+router.get("/transaction", Verify, GetTransactionToken);
 
 module.exports = router;

@@ -1,0 +1,85 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Daftar Booking</h1>
+  </div>
+
+  <!-- Content Row -->
+  <div class="row">
+    <% if(bookings.length > 0) { %> <% bookings.forEach(function(booking) { %>
+    <div class="col-lg-4 mb-4">
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">
+            Booking ID: <%= booking.booking_id %>
+          </h6>
+        </div>
+        <div class="card-body">
+          <p><strong>Bike Name:</strong> <%= booking['bicycle.bike_name'] %></p>
+          <p><strong>Booking Date:</strong> <%= booking.booking_date %></p>
+          <p><strong>Time Start:</strong> <%= booking.time_start %></p>
+          <p><strong>Time End:</strong> <%= booking.time_end %></p>
+          <p><strong>Total Amount:</strong> <%= booking.total_amount%></p>
+        </div>
+        <div class="card-footer text-right">
+          <form method="post">
+            <input type="hidden" name="booking_id" value="<%= booking.id %>" />
+            <button type="submit" id="pay-now" class="btn btn-primary btn-block">
+              Pay Now
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
+    <% }) %> <% } else { %>
+    <div class="col-12 text-center">
+      <p>No bookings available</p>
+    </div>
+    <% } %>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<!-- Bootstrap Modal -->
+<div
+  class="modal fade"
+  id="transactionModal"
+  tabindex="-1"
+  aria-labelledby="transactionModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="transactionModalLabel">Transaction</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body" id="snap-container">
+        <!-- Snap container -->
+        <!-- <div id="snap-container"></div> -->
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    $("#pay-now").on("click", async function (e) {
+      e.preventDefault();
+      try {
+        const response = await fetch("/transaction", { method: "GET" });
+        const { transactionToken } = await response.json();
+        console.log(transactionToken);
+        window.snap.embed(transactionToken, {
+          embedId: "snap-container",
+        });
+        $("#transactionModal").modal("show");
+      } catch (error) {
+        console.log(error);
+      }
+    });
+  });
+</script>

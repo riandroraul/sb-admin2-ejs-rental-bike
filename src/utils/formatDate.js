@@ -1,5 +1,5 @@
 // Function to format the date
-function formatDate(inputDate) {
+function formatDate(inputDate, withDays = false) {
   // Parse the input date string
   const date = new Date(inputDate);
 
@@ -20,10 +20,13 @@ function formatDate(inputDate) {
   ];
 
   // Extract the month and year
+  const days = date.getDay();
   const month = monthNames[date.getMonth()];
   const year = date.getFullYear();
 
   // Format and return the result
+  if (withDays) return `${days} ${month} ${year}`;
+
   return `${month} ${year}`;
 }
 

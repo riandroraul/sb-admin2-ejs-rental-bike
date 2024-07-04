@@ -24,6 +24,9 @@ module.exports = {
       time_end: {
         type: Sequelize.TIME,
       },
+      total_amount: {
+        type: Sequelize.STRING,
+      },
       createdAt: {
         allowNull: false,
         type: Sequelize.DATE,

@@ -18,7 +18,7 @@
               class="form-control <%= errors.find(e => e.path === 'bike_name') ? 'is-invalid' : '' %>"
               id="bike_name"
               name="bike_name"
-              placeholder="electric bike 1"
+              placeholder="ex: electric bike name"
               value="<%= formData.bike_name !== '' ? formData.bike_name : '' %>"
             />
             <% if (errors.find(e => e.path === 'bike_name')) { %>

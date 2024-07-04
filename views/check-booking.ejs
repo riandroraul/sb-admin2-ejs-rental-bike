@@ -37,49 +37,66 @@
               type="hidden"
               class="form-control"
               value="<%= user.userId %>"
-              id="user_id"
-              name="user_id"
+              id="userId"
+              name="userId"
             />
             <input type="hidden" name="bike_id" value="<%= bike.bike_id %>" />
             <div class="form-group">
-              <label for="date">Booking Date</label>
-              <input type="date" class="form-control" id="date" name="date" />
+              <label for="booking_date">Booking Date</label>
+              <input
+                type="date"
+                class="form-control <%= errors.find(e => e.path === 'booking_date') ? 'is-invalid' : '' %>"
+                id="booking_date"
+                name="booking_date"
+                value="<%= formData.booking_date %>"
+              />
+              <% if (errors.find(e => e.path === 'booking_date')) { %>
+              <div id="bike" class="invalid-feedback">
+                <%= errors.find(e => e.path === 'booking_date').msg %>
+              </div>
+              <% } %>
             </div>
             <div class="form-group">
-              <label for="time-start">Time Start</label>
+              <label for="time_start">Time Start</label>
               <input
                 type="time"
-                class="form-control"
-                id="time-start"
-                name="time-start"
-                min="07:00"
-                max="17:00"
+                class="form-control <%= errors.find(e => e.path === 'time_start') ? 'is-invalid' : '' %>"
+                id="time_start"
+                name="time_start"
                 step="3600"
+                value="<%= formData.time_start || '' %>"
               />
+              <% if (errors.find(e => e.path === 'time_start')) { %>
+              <div id="bike" class="invalid-feedback">
+                <%= errors.find(e => e.path === 'time_start').msg %>
+              </div>
+              <% } %>
             </div>
             <div class="form-group">
-              <label for="time-end">Time End</label>
+              <label for="time_end">Time End</label>
               <input
                 type="time"
-                class="form-control"
-                id="time-end"
-                name="time-end"
-                min="08:00"
-                max="17:00"
+                class="form-control <%= errors.find(e => e.path === 'time_end') ? 'is-invalid' : '' %>"
+                id="time_end"
+                name="time_end"
                 step="3600"
               />
+              <% if (errors.find(e => e.path === 'time_end')) { %>
+              <div id="bike" class="invalid-feedback">
+                <%= errors.find(e => e.path === 'time_end').msg %>
+              </div>
+              <% } %>
             </div>
             <div class="form-group">
-              <label for="total-amount">Total Amount</label>
+              <label for="total_amount">Total Amount</label>
               <input
                 type="text"
                 class="form-control"
-                id="total-amount"
-                name="total-amount"
+                id="total_amount"
+                name="total_amount"
                 readonly
               />
             </div>
-
             <button type="submit" class="btn btn-primary btn-block">Book Now</button>
           </form>
         </div>
@@ -91,17 +108,16 @@
 
 <script>
   $(function () {
-    $("#time-end").on("keyup", function () {
-      const price = "<%= bike.price %>";
-      const priceToInt = parseInt(price);
+    const price = "<%= bike.price %>";
+    const priceToInt = parseInt(price);
+    $("#time_end").on("keyup", function () {
+      const booking_date = $("input[type=date][name=booking_date]").val();
+      const timeStart = $("input[type=time][name=time_start]").val();
+      const timeEnd = $("input[type=time][name=time_end]").val();
 
-      const date = $("input[type=date][name=date]").val();
-      const timeStart = $("input[type=time][name=time-start]").val();
-      const timeEnd = $("input[type=time][name=time-end]").val();
-
-      // Combine date and time to create full Date objects
-      const startDateTime = new Date(`${date}T${timeStart}:00`);
-      const endDateTime = new Date(`${date}T${timeEnd}:00`);
+      // Combine booking_date and time to create full Date objects
+      const startDateTime = new Date(`${booking_date}T${timeStart}:00`);
+      const endDateTime = new Date(`${booking_date}T${timeEnd}:00`);
 
       // Calculate the difference in milliseconds
       const differenceInMilliseconds = endDateTime - startDateTime;
@@ -110,11 +126,14 @@
       const differenceInMinutes = differenceInMilliseconds / (1000 * 60);
       const differenceInHours = Math.floor(differenceInMinutes / 60);
 
-      console.log(differenceInHours);
       const totalAmount = differenceInHours * priceToInt;
-      const toIDR = "IDR " + totalAmount.toLocaleString("id-ID");
       console.log(totalAmount);
-      $("input[type=text][name=total-amount]").val(toIDR);
+      if (totalAmount >= 0) {
+        const toIDR = "IDR " + totalAmount.toLocaleString("id-ID");
+        $("input[type=text][name=total_amount]").val(toIDR);
+      } else {
+        $("input[type=text][name=total_amount]").val("IDR 0");
+      }
     });
   });
 </script>
