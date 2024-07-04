@@ -14,13 +14,13 @@ Bicycle.init(
     bike_name: {
       type: DataTypes.STRING,
     },
-    harga: {
+    price: {
       type: DataTypes.STRING,
     },
-    baterai: {
+    battery: {
       type: DataTypes.STRING,
     },
-    tahun: {
+    year: {
       type: DataTypes.STRING,
     },
     desc: {
@@ -29,13 +29,13 @@ Bicycle.init(
     motor: {
       type: DataTypes.STRING,
     },
-    kecepatan_maks: {
+    max_speed: {
       type: DataTypes.STRING,
     },
     shifter: {
       type: DataTypes.STRING,
     },
-    bobot: {
+    weight: {
       type: DataTypes.INTEGER,
     },
     url_image: {

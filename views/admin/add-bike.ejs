@@ -1,0 +1,188 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-4 text-gray-800">Add New Bike</h1>
+
+  <!-- Add Bike Form -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Bike Details</h6>
+    </div>
+    <div class="card-body">
+      <form method="post" action="/add-new-bike">
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="bike_name">Bike name</label>
+            <input
+              type="text"
+              class="form-control <%= errors.find(e => e.path === 'bike_name') ? 'is-invalid' : '' %>"
+              id="bike_name"
+              name="bike_name"
+              placeholder="ex: electric bike name"
+              value="<%= formData.bike_name !== '' ? formData.bike_name : '' %>"
+            />
+            <% if (errors.find(e => e.path === 'bike_name')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'bike_name').msg %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="price">Price / hour</label>
+            <input
+              type="number"
+              class="form-control <%= errors.find(e => e.path === 'price') ? 'is-invalid' : '' %>"
+              id="price"
+              name="price"
+              placeholder="ex: 50000"
+              value="<%= formData.price || '' %>"
+            />
+            <% if (errors.find(e => e.path === 'price')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'price').msg %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="year">Year</label>
+            <input
+              type="number"
+              class="form-control <%= errors.find(e => e.path === 'year') ? 'is-invalid' : '' %>"
+              id="year"
+              name="year"
+              placeholder="ex: 2023"
+              value="<%= formData.year || '' %>"
+            />
+            <% if (errors.find(e => e.path === 'year')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'year').msg %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="battery">Battery</label>
+            <input
+              type="text"
+              class="form-control <%= errors.find(e => e.path === 'battery') ? 'is-invalid' : '' %>"
+              id="battery"
+              name="battery"
+              placeholder="ex: 48V 20Ah (Removable Baterry)"
+              value="<%= formData.battery || '' %>"
+            />
+            <% if (errors.find(e => e.path === 'battery')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'battery').msg %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="weight">Weight</label>
+            <input
+              type="text"
+              class="form-control <%= errors.find(e => e.path === 'weight') ? 'is-invalid' : '' %>"
+              id="weight"
+              name="weight"
+              placeholder="ex: 58 kg"
+              value="<%= formData.weight || '' %>"
+            />
+            <% if (errors.find(e => e.path === 'weight')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'weight').msg %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="max_speed">Max Speed</label>
+            <input
+              type="text"
+              class="form-control <%= errors.find(e => e.path === 'max_speed') ? 'is-invalid' : '' %>"
+              id="max_speed"
+              name="max_speed"
+              placeholder="ex: 40 km/h"
+              value="<%= formData.max_speed || '' %>"
+            />
+            <% if (errors.find(e => e.path === 'max_speed')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'max_speed').msg %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="shifter">Shifter</label>
+            <input
+              type="text"
+              class="form-control <%= errors.find(e => e.path === 'shifter') ? 'is-invalid' : '' %>"
+              id="shifter"
+              name="shifter"
+              placeholder="ex: 6 level speed"
+              value="<%= formData.shifter || '' %>"
+            />
+            <% if (errors.find(e => e.path === 'shifter')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'shifter').msg %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="motor">Motor</label>
+            <input
+              type="text"
+              class="form-control <%= errors.find(e => e.path === 'motor') ? 'is-invalid' : '' %>"
+              id="motor"
+              name="motor"
+              placeholder="ex: 500W"
+              value="<%= formData.motor || '' %>"
+            />
+            <% if (errors.find(e => e.path === 'motor')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'motor').msg %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <div class="form-row">
+          <div class="form-group col-md-6">
+            <label for="url_image" class="">URL Image (200x150px)</label>
+            <textarea
+              class="form-control <%= errors.find(e => e.path === 'url_image') ? 'is-invalid' : '' %>"
+              id="url_image"
+              name="url_image"
+              rows="3"
+              placeholder="ex: exmple.url"
+              value="<%= formData.url_image || '' %>"
+            ></textarea>
+            <% if (errors.find(e => e.path === 'url_image')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'url_image').msg %>
+            </div>
+            <% } %>
+          </div>
+          <div class="form-group col-md-6">
+            <label for="desc">Description</label>
+            <textarea
+              class="form-control <%= errors.find(e => e.path === 'desc') ? 'is-invalid' : '' %>"
+              id="desc"
+              name="desc"
+              rows="3"
+              placeholder="ex: bike description"
+              value="<%= formData.desc || '' %>"
+            ></textarea>
+            <% if (errors.find(e => e.path === 'desc')) { %>
+            <div id="bike" class="invalid-feedback">
+              <%= errors.find(e => e.path === 'desc').msg %>
+            </div>
+            <% } %>
+          </div>
+        </div>
+        <button type="submit" class="btn btn-primary btn-block">Add Bike</button>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->

@@ -24,6 +24,15 @@ const errorResult = (error, res, statusCode, path) => {
           title,
           errors: [{ success: false, msg: error.message }],
         });
+      case "add-new-bike":
+        title = "Rental Bike | Add new Bike";
+        return res.status(statusCode).render("admin/add-bike", {
+          layout: "layouts/main",
+          title,
+          path: "/bikes",
+          FormData: {},
+          errors: [{ success: false, msg: error.message }],
+        });
     }
 
     return res.status(statusCode).render(pathRender, {
