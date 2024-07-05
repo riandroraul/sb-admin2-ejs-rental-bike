@@ -3,6 +3,17 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Daftar Booking</h1>
+    <% if(errors.length > 0) { %> <% errors.forEach(function(error) { %>
+    <div
+      class="alert alert-<%= error.success == true ? 'success' : 'danger' %> col-lg-6 alert-dismissible fade show"
+      role="alert"
+    >
+      <%= error.msg %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% }) %> <% } %>
   </div>
 
   <!-- Content Row -->
@@ -73,10 +84,27 @@
         const response = await fetch("/transaction", { method: "GET" });
         const { transactionToken } = await response.json();
         console.log(transactionToken);
-        window.snap.embed(transactionToken, {
-          embedId: "snap-container",
+        window.snap.pay(transactionToken, {
+          onSuccess: function (result) {
+            /* You may add your own implementation here */
+            alert("payment success!");
+            console.log(result);
+          },
+          onPending: function (result) {
+            /* You may add your own implementation here */
+            alert("wating your payment!");
+            console.log(result);
+          },
+          onError: function (result) {
+            /* You may add your own implementation here */
+            alert("payment failed!");
+            console.log(result);
+          },
+          onClose: function () {
+            /* You may add your own implementation here */
+            alert("you closed the popup without finishing the payment");
+          },
         });
-        $("#transactionModal").modal("show");
       } catch (error) {
         console.log(error);
       }

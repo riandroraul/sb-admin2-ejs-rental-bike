@@ -21,6 +21,11 @@ module.exports = {
       .withMessage("Time start is required")
       .custom((value) => {
         const [startHour, startMinute] = value.split(":").map(Number);
+
+        if (startMinute !== 0) {
+          throw new Error("Minute in time start must be 00");
+        }
+
         if (startHour < 7 || startHour >= 16 || (startHour === 16 && startMinute == 0)) {
           throw new Error("Time start must be between 07:00 and 16:00");
         }
@@ -35,6 +40,10 @@ module.exports = {
         const timeStart = req.body.time_start;
         const [startHour, startMinute] = timeStart.split(":").map(Number);
         const [endHour, endMinute] = value.split(":").map(Number);
+
+        if (endMinute !== 0) {
+          throw new Error("Minute in time start must be 00");
+        }
 
         if (endHour < 8 || endHour >= 17 || (endHour === 17 && endMinute == 0)) {
           throw new Error("Time end must be between 08:00 and 17:00");

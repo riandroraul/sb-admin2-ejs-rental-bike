@@ -7,24 +7,29 @@ class Payment extends Model {}
 Payment.init(
   {
     payment_id: {
-      type: DataTypes.STRING,
+      type: DataTypes.INTEGER,
       allowNull: false,
+      autoIncrement: true,
+      primaryKey: true,
+    },
+    transaction_id: {
+      type: DataTypes.STRING,
     },
     booking_id: {
-      type: Sequelize.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false,
     },
     status: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     total_amount: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
     payment_date: {
-      type: Sequelize.DATE,
+      type: DataTypes.DATE,
     },
     payment_method: {
-      type: Sequelize.STRING,
+      type: DataTypes.STRING,
     },
   },
   {

@@ -42,7 +42,7 @@ const CreateBooking = async (req, res) => {
     const createBooking = await Booking.create(data, { raw: true });
     console.log(createBooking);
     req.flash("errors", [{ success: true, msg: "Booking Added Successfully" }]);
-    res.redirect("/bikes");
+    res.redirect("/booking-list");
   } catch (error) {
     console.log(error);
   }

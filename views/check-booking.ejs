@@ -63,7 +63,6 @@
                 class="form-control <%= errors.find(e => e.path === 'time_start') ? 'is-invalid' : '' %>"
                 id="time_start"
                 name="time_start"
-                step="3600"
                 value="<%= formData.time_start || '' %>"
               />
               <% if (errors.find(e => e.path === 'time_start')) { %>
@@ -79,7 +78,6 @@
                 class="form-control <%= errors.find(e => e.path === 'time_end') ? 'is-invalid' : '' %>"
                 id="time_end"
                 name="time_end"
-                step="3600"
               />
               <% if (errors.find(e => e.path === 'time_end')) { %>
               <div id="bike" class="invalid-feedback">
