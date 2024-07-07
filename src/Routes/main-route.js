@@ -11,7 +11,10 @@ const { sentJson } = require("../Controllers/PageController");
 const VerifyIsAdmin = require("../Middleware/VerifyIsAdmin");
 const Verify = require("../Middleware/Verify");
 const { CreateBicycle } = require("../Controllers/BicycleController");
-const GetTransactionToken = require("../Controllers/PaymentController");
+const {
+  GetTransactionToken,
+  TransactionNotification,
+} = require("../Controllers/PaymentController");
 
 const router = Router();
 
@@ -27,5 +30,6 @@ router.post("/addNewBike", CreateBicycle);
 
 // transaction
 router.get("/transaction", Verify, GetTransactionToken);
+router.post("/transaction/notif", Verify, TransactionNotification);
 
 module.exports = router;

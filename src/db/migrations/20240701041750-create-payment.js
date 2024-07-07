@@ -6,8 +6,12 @@ module.exports = {
       payment_id: {
         allowNull: false,
         primaryKey: true,
-        unique: true,
+        autoIncrement: true,
+        type: Sequelize.INTEGER,
+      },
+      transaction_id: {
         type: Sequelize.STRING,
+        unique: true,
       },
       booking_id: {
         type: Sequelize.INTEGER,
