@@ -1,7 +1,9 @@
 const Bicycle = require("../db/models/bicycle");
 const Booking = require("../db/models/booking");
+const Payment = require("../db/models/payment");
 const formatDate = require("../utils/formatDate");
 const formatIDR = require("../utils/formatIDR");
+const crypto = require("crypto");
 
 const GetBookings = async (req, res) => {
   try {
@@ -40,7 +42,16 @@ const CreateBooking = async (req, res) => {
       total_amount: totalAmountToNumber,
     };
     const createBooking = await Booking.create(data, { raw: true });
-    console.log(createBooking);
+    // const createPayment = await Payment.create(
+    //   {
+    //     transaction_id: crypto.randomUUID(),
+    //     total_amount: totalAmountToNumber,
+    //     booking_id: createBooking.booking_id,
+    //   },
+    //   { raw: true }
+    // );
+    console.log({ createBooking });
+    // console.log(createPayment);
     req.flash("errors", [{ success: true, msg: "Booking Added Successfully" }]);
     res.redirect("/booking-list");
   } catch (error) {

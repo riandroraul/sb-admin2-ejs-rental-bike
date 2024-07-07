@@ -1,0 +1,73 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-4 text-gray-800">Payment Detail</h1>
+
+  <!-- Content Row -->
+  <div class="row">
+    <div class="col-lg-8">
+      <!-- Card Example -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Booking Information</h6>
+        </div>
+        <div class="card-body">
+          <div class="row">
+            <div class="col-md-6">
+              <p><strong>Booking ID:</strong> <%= "booking.booking_id" %></p>
+              <p><strong>Bike Name:</strong> <%= "booking.bike_name" %></p>
+              <p><strong>Booking Date:</strong> <%= 'booking.booking_date' %></p>
+            </div>
+            <div class="col-md-6">
+              <p><strong>Time Start:</strong> <%= 'booking.time_start' %></p>
+              <p><strong>Time End:</strong> <%= 'booking.time_end' %></p>
+              <p><strong>Total Amount:</strong> <%= 'booking.total_amount' %></p>
+            </div>
+          </div>
+          <div class="text-center">
+            <svg id="barcode"></svg>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-4">
+      <!-- Card Example -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Customer Information</h6>
+        </div>
+        <div class="card-body">
+          <p><strong>Name:</strong> <%= 'booking.customer_name' %></p>
+          <p><strong>Email:</strong> <%= 'booking.customer_email' %></p>
+          <p><strong>Phone:</strong> <%= 'booking.customer_phone' %></p>
+        </div>
+      </div>
+
+      <!-- Card Example -->
+      <div class="card shadow mb-4">
+        <div class="card-header py-3">
+          <h6 class="m-0 font-weight-bold text-primary">Payment Status</h6>
+        </div>
+        <div class="card-body">
+          <p>
+            Your payment is <strong>Pending</strong>. Please complete the payment to
+            confirm your booking.
+          </p>
+          <button class="btn btn-success btn-block" id="pay-now">Pay Now</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<script>
+  $(document).ready(function () {
+    JsBarcode("#barcode", "<%= 'booking.booking_id' %>");
+
+    $("#pay-now").on("click", async function (e) {
+      e.preventDefault();
+    });
+  });
+</script>

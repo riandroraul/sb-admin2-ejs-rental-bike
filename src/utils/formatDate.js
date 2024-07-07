@@ -20,7 +20,7 @@ function formatDate(inputDate, withDays = false) {
   ];
 
   // Extract the month and year
-  const days = date.getDay();
+  const days = date.getDate();
   const month = monthNames[date.getMonth()];
   const year = date.getFullYear();
 

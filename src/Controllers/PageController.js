@@ -1,8 +1,6 @@
 const formatDate = require("../utils/formatDate");
 
 const MainView = (req, res) => {
-  // const data = { name: "john doe", age: 34 };
-  // console.log(req.path);
   const user = req.user;
   const view = user.role == 1 ? "admin/dashboard" : "users/dashboard";
   res.render(view, {
@@ -15,13 +13,18 @@ const MainView = (req, res) => {
 };
 
 const LoginView = (req, res) => {
-  res.render("login", { layout: "public-pages/main", title: "Rental Bike | Login" });
+  res.render("login", {
+    layout: "public-pages/main",
+    title: "Rental Bike | Login",
+    formData: req.body,
+  });
 };
 
 const SignupView = (req, res) => {
   res.render("signup", {
     layout: "public-pages/main",
     title: "Rental Bike | Registration",
+    formData: req.body,
   });
 };
 
@@ -29,6 +32,7 @@ const ForgotPasswordView = (req, res) => {
   res.render("forgot-password", {
     layout: "public-pages/main",
     title: "Rental Bike | Forgot Password",
+    formData: req.body,
   });
 };
 

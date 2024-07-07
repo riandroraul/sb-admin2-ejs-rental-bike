@@ -30,6 +30,21 @@ const GetTransactionToken = (req, res) => {
   });
 };
 
+const DetailPayment = async (req, res) => {
+  try {
+    return res
+      .status(200)
+      .render("detail-payment", {
+        layout: "layouts/main",
+        title: "Payment Detail",
+        user: req.user,
+        path: req.path,
+      });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const TransactionNotification = async (req, res) => {
   try {
     let apiClient = new midtransClient.Snap({
@@ -101,4 +116,4 @@ const TransactionNotification = async (req, res) => {
   }
 };
 
-module.exports = { GetTransactionToken, TransactionNotification };
+module.exports = { GetTransactionToken, TransactionNotification, DetailPayment };

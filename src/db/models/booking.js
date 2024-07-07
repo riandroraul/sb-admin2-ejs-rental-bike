@@ -2,6 +2,7 @@ const { Model, DataTypes } = require("sequelize");
 const sequelizeConnection = require("../../config/db-connect");
 const User = require("./user");
 const Bicycle = require("./bicycle");
+const Payment = require("./payment");
 
 class Booking extends Model {}
 
