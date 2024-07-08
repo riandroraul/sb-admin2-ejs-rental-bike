@@ -1,0 +1,155 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-2 text-gray-800">List of Payments</h1>
+
+  <% if(errors.length > 0) { %> <% errors.forEach(function(error) { %>
+  <div
+    class="alert alert-<%= error.success == true ? 'success' : 'danger' %> col-lg-6 alert-dismissible fade show"
+    role="alert"
+  >
+    <%= error.msg %>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <% }) %> <% } %>
+  <!-- DataTales Example -->
+  <div class="card shadow mb-4">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">DataTables Example</h6>
+    </div>
+    <div class="card-body">
+      <div class="table-responsive">
+        <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+          <thead>
+            <tr>
+              <th>transaction ID</th>
+              <th>Booking ID</th>
+              <th>Status</th>
+              <th>Total Amount</th>
+              <th>Payment Date</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            <% if(data.length > 0) { %> <% data.forEach(el => { %>
+            <tr>
+              <td><%= el.transaction_id %></td>
+              <td><%= el.booking_id %></td>
+              <td><%= el.status == undefined ? 'UNPAID' : 'PAID' %></td>
+              <td><%= el.total_amount %></td>
+              <td>
+                <%= el.payment_date == undefined ? 'NULL' : new
+                Date(el.payment_date).toLocaleString('id-ID') %>
+              </td>
+              <td class="d-flex">
+                <!-- Button trigger modal -->
+                <a
+                  class="nav-link tampilModalUpdate"
+                  id="deleteUser"
+                  href="/delete-payment"
+                  data-toggle="modal"
+                  data-transaction_id="<%= el.transaction_id %>"
+                  data-target="#deletePaymentModal"
+                >
+                  <i class="fas fa-fw fa-trash"></i>
+                </a>
+                <a
+                  class="nav-link tampilModalUpdate"
+                  id="deleteUser"
+                  href="/confirm/<%= el.booking_id %>"
+                >
+                  <i class="fas fa-fw fa-eye"></i>
+                </a>
+              </td>
+            </tr>
+            <% }); %> <% } %>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- /.container-fluid -->
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="updatePaymentModal"
+  data-backdrop="static"
+  data-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="updatePaymentModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="updatePaymentModalLabel">Delete User</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Are you sure want to delete
+        <span id="userName" class="h5 mb-0 font-weight-bold text-gray-800"></span> with
+        email <span id="userEmail" class="h5 mb-0 font-weight-bold text-gray-800"></span>?
+      </div>
+      <div class="modal-footer">
+        <button type="button" id="btn-no" class="btn btn-secondary" data-dismiss="modal">
+          Cancel
+        </button>
+        <button type="button" id="confirmDelete" class="btn btn-primary">Update</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  $(function () {
+    $("#updatePaymentModal").on("show.bs.modal", function (event) {
+      const btn = $(event.relatedTarget);
+      const userId = btn.data("userid");
+      const userName = btn.data("username");
+      const userEmail = btn.data("email");
+      let modal = $(this);
+      modal.find(".modal-body #userName").text(userName);
+      modal.find(".modal-body #userEmail").text(userEmail);
+
+      modal.find(".modal-footer #confirmDelete").data("userid", userId);
+    });
+    $("#confirmDelete").click(async function () {
+      let userId = $(this).data("userid");
+      try {
+        const res = await fetch(`/delete-user/${userId}`, { method: "DELETE" });
+
+        // const data = await res.json();
+        if (res.ok) {
+          console.log("user deleted successfully");
+          $("#updatePaymentModal").modal("hide");
+          $("#updatePaymentModal").on("hidden.bs.modal", function () {
+            location.reload(); // Refresh the page after the modal is hidden
+          });
+        } else {
+          console.log("failed to delete user");
+        }
+        // console.log(data);
+      } catch (error) {
+        console.log("error delete user: ", error);
+      }
+      // $.ajax({
+      //   url: "/delete-user/" + userId,
+      //   method: "GET",
+      //   type: "GET",
+      //   success: function (res) {
+      //     console.log("respons success");
+      //     $("#updatePaymentModal").modal("hide");
+      //   },
+      //   error: function (err) {
+      //     console.error("error deleting user: ", err);
+      //   },
+      // });
+    });
+  });
+</script>

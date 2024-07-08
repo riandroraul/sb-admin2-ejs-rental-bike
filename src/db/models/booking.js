@@ -31,7 +31,7 @@ Booking.init(
   }
 );
 
-Booking.hasMany(User, { foreignKey: "userId", as: "user" });
+Booking.belongsTo(User, { foreignKey: "userId", as: "user" });
 Booking.belongsTo(Bicycle, { foreignKey: "bike_id", as: "bicycle" });
 
 module.exports = Booking;

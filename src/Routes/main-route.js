@@ -14,6 +14,7 @@ const { CreateBicycle } = require("../Controllers/BicycleController");
 const {
   GetTransactionToken,
   TransactionNotification,
+  ConfirmPayment,
 } = require("../Controllers/PaymentController");
 
 const router = Router();
@@ -31,5 +32,6 @@ router.post("/addNewBike", CreateBicycle);
 // transaction
 router.get("/transaction", Verify, GetTransactionToken);
 router.post("/transaction/notif", Verify, TransactionNotification);
+router.get("/confirm/:booking_id", Verify, VerifyIsAdmin, ConfirmPayment);
 
 module.exports = router;

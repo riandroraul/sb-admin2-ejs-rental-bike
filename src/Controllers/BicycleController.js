@@ -56,7 +56,6 @@ const GetBicycleById = async (req, res) => {
 const CreateBicycle = async (req, res) => {
   try {
     const created = await Bicycle.create(req.body);
-    console.log(created);
     req.flash("errors", [{ success: true, msg: "Successfully, New Bike added!" }]);
     return res.redirect("/bikes");
   } catch (error) {

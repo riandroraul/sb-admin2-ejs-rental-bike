@@ -34,12 +34,13 @@
           <p><strong>Total Amount:</strong> <%= booking.total_amount%></p>
         </div>
         <div class="card-footer text-right">
-          <form method="post">
-            <input type="hidden" name="booking_id" value="<%= booking.id %>" />
-            <button type="submit" id="pay-now" class="btn btn-primary btn-block">
-              Pay Now
-            </button>
-          </form>
+          <a
+            href="/payment-detail/<%= booking.booking_id %>"
+            id="pay-now"
+            class="btn btn-primary btn-block"
+          >
+            Check
+          </a>
         </div>
       </div>
     </div>
@@ -63,20 +64,30 @@
   <div class="modal-dialog modal-dialog-centered">
     <div class="modal-content">
       <div class="modal-header">
-        <h5 class="modal-title" id="transactionModalLabel">Transaction</h5>
+        <h5 class="modal-title text text-dark" id="bookingDetailModalLabel">
+          Booking Details
+        </h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
-      <div class="modal-body" id="snap-container">
-        <!-- Snap container -->
-        <!-- <div id="snap-container"></div> -->
+      <div class="modal-body">
+        <p><strong>Bike Name:</strong> <span id="modal-bike-name"></span></p>
+        <p><strong>Total Amount:</strong> <span id="modal-total-amount"></span></p>
+        <p><strong>Duration:</strong> <span id="modal-duration"></span></p>
+        <p><strong>Name:</strong> <span id="modal-customer-name"></span></p>
+        <p><strong>Email:</strong> <span id="modal-customer-email"></span></p>
+        <p><strong>Status:</strong> <span id="modal-status"></span></p>
+        <p><strong>Payment Date:</strong> <span id="modal-payment-date"></span></p>
+        <div class="text-center">
+          <div id="qrcode"></div>
+        </div>
       </div>
     </div>
   </div>
 </div>
 
-<script>
+<!-- <script>
   $(function () {
     $("#pay-now").on("click", async function (e) {
       e.preventDefault();
@@ -110,4 +121,4 @@
       }
     });
   });
-</script>
+</script> -->

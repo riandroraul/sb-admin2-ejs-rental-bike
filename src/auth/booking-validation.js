@@ -42,7 +42,7 @@ module.exports = {
         const [endHour, endMinute] = value.split(":").map(Number);
 
         if (endMinute !== 0) {
-          throw new Error("Minute in time start must be 00");
+          throw new Error("Minute in time end must be 00");
         }
 
         if (endHour < 8 || endHour >= 17 || (endHour === 17 && endMinute == 0)) {

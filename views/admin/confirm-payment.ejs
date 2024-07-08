@@ -1,0 +1,66 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-4 text-gray-800">Update Payment</h1>
+
+  <!-- Card with Form -->
+  <div class="card shadow mb-4 col-6">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Update Payment</h6>
+    </div>
+    <div class="card-body">
+      <form id="updatePaymentForm" action="/update-payment" method="POST">
+        <div class="form-group">
+          <label for="userId">Transaction ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="transaction_id"
+            name="transaction_id"
+            value="<%= data.transaction_id %>"
+            readonly
+          />
+        </div>
+        <div class="form-group">
+          <label for="booking_id">Booking ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="booking_id"
+            name="booking_id"
+            value="<%= data.booking_id %>"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01"
+              >Payment Status</label
+            >
+          </div>
+          <select class="custom-select" name="status" id="inputGroupSelect01">
+            <option selected><%= data.status == undefined ? 'UNPAID' : 'PAID' %></option>
+            <option value="UNPAID">UNPAID</option>
+            <option value="PAID">PAID</option>
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="payment_date">Payment Date</label>
+          <input type="date" class="form-control" id="payment_date" name="payment_date" />
+        </div>
+        <div class="form-group">
+          <label for="paymentAmount">Payment Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            id="paymentAmount"
+            name="paymentAmount"
+            value="<%= data.total_amount %>"
+            readonly
+          />
+        </div>
+        <button class="btn btn-danger">Cancel</button>
+        <button type="submit" class="btn btn-primary">Update Payment</button>
+      </form>
+    </div>
+  </div>
+</div>
