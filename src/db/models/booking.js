@@ -2,7 +2,6 @@ const { Model, DataTypes } = require("sequelize");
 const sequelizeConnection = require("../../config/db-connect");
 const User = require("./user");
 const Bicycle = require("./bicycle");
-const Payment = require("./payment");
 
 class Booking extends Model {}
 
@@ -32,7 +31,7 @@ Booking.init(
   }
 );
 
-Booking.hasMany(User, { foreignKey: "userId", as: "user" });
+Booking.belongsTo(User, { foreignKey: "userId", as: "user" });
 Booking.belongsTo(Bicycle, { foreignKey: "bike_id", as: "bicycle" });
 
 module.exports = Booking;

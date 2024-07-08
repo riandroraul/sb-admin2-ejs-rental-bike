@@ -42,16 +42,16 @@ const CreateBooking = async (req, res) => {
       total_amount: totalAmountToNumber,
     };
     const createBooking = await Booking.create(data, { raw: true });
-    // const createPayment = await Payment.create(
-    //   {
-    //     transaction_id: crypto.randomUUID(),
-    //     total_amount: totalAmountToNumber,
-    //     booking_id: createBooking.booking_id,
-    //   },
-    //   { raw: true }
-    // );
-    console.log({ createBooking });
-    // console.log(createPayment);
+    const createPayment = await Payment.create(
+      {
+        transaction_id: crypto.randomUUID(),
+        total_amount: totalAmountToNumber,
+        booking_id: createBooking.booking_id,
+      },
+      { raw: true }
+    );
+    // console.log({ createBooking });
+    // console.log({ createPayment });
     req.flash("errors", [{ success: true, msg: "Booking Added Successfully" }]);
     res.redirect("/booking-list");
   } catch (error) {

@@ -34,12 +34,13 @@
           <p><strong>Total Amount:</strong> <%= booking.total_amount%></p>
         </div>
         <div class="card-footer text-right">
-          <form method="post">
-            <input type="hidden" name="booking_id" value="<%= booking.id %>" />
-            <button type="submit" id="pay-now" class="btn btn-primary btn-block">
-              Check
-            </button>
-          </form>
+          <a
+            href="/payment-detail/<%= booking.booking_id %>"
+            id="pay-now"
+            class="btn btn-primary btn-block"
+          >
+            Check
+          </a>
         </div>
       </div>
     </div>

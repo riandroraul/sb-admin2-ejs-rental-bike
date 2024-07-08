@@ -14,18 +14,18 @@
         <div class="card-body">
           <div class="row">
             <div class="col-md-6">
-              <p><strong>Booking ID:</strong> <%= "booking.booking_id" %></p>
-              <p><strong>Bike Name:</strong> <%= "booking.bike_name" %></p>
-              <p><strong>Booking Date:</strong> <%= 'booking.booking_date' %></p>
+              <p><strong>Booking ID:</strong> <%= data.booking_id %></p>
+              <p><strong>Bike Name:</strong> <%= data["bicycle.bike_name"] %></p>
+              <p><strong>Booking Date:</strong> <%= data.formatBookingDate %></p>
+              <p><strong>Time Start:</strong> <%= data.time_start %></p>
+              <p><strong>Time End:</strong> <%= data.time_end %></p>
+              <p><strong>Total Amount:</strong> <%= data.formatTotalAmountToIDR %></p>
             </div>
             <div class="col-md-6">
-              <p><strong>Time Start:</strong> <%= 'booking.time_start' %></p>
-              <p><strong>Time End:</strong> <%= 'booking.time_end' %></p>
-              <p><strong>Total Amount:</strong> <%= 'booking.total_amount' %></p>
+              <div class="text-center">
+                <img id="barcode" style="border: 1px solid #000" src="/img/qrcode.png" />
+              </div>
             </div>
-          </div>
-          <div class="text-center">
-            <svg id="barcode"></svg>
           </div>
         </div>
       </div>
@@ -38,9 +38,8 @@
           <h6 class="m-0 font-weight-bold text-primary">Customer Information</h6>
         </div>
         <div class="card-body">
-          <p><strong>Name:</strong> <%= 'booking.customer_name' %></p>
-          <p><strong>Email:</strong> <%= 'booking.customer_email' %></p>
-          <p><strong>Phone:</strong> <%= 'booking.customer_phone' %></p>
+          <p><strong>Name:</strong> <%= data['user.name'] %></p>
+          <p><strong>Email:</strong> <%= data['user.email'] %></p>
         </div>
       </div>
 
@@ -49,12 +48,15 @@
         <div class="card-header py-3">
           <h6 class="m-0 font-weight-bold text-primary">Payment Status</h6>
         </div>
-        <div class="card-body">
-          <p>
-            Your payment is <strong>Pending</strong>. Please complete the payment to
-            confirm your booking.
+        <div class="card-body d-flex gap">
+          <span class="status-icon paid-icon bg-success btn-circle p-3">
+            <i class="fas fa-check"></i>
+            <!-- Check icon for Paid -->
+          </span>
+          <p class="ml-3">
+            Your payment is <strong>Paid</strong>. Thank you for completing your payment.
           </p>
-          <button class="btn btn-success btn-block" id="pay-now">Pay Now</button>
+          <!-- <button class="btn btn-success btn-block" id="pay-now">Pay Now</button> -->
         </div>
       </div>
     </div>
@@ -64,10 +66,14 @@
 
 <script>
   $(document).ready(function () {
-    JsBarcode("#barcode", "<%= 'booking.booking_id' %>");
-
-    $("#pay-now").on("click", async function (e) {
-      e.preventDefault();
-    });
+    // const canvas = $("#barcode");
+    // console.log(canvas);
+    // QRCode.toCanvas(canvas, "sample text", function (error) {
+    //   if (error) console.error(error);
+    //   console.log("success!");
+    // });
+    // $("#pay-now").on("click", async function (e) {
+    //   e.preventDefault();
+    // });
   });
 </script>

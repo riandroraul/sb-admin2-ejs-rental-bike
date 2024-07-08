@@ -1,6 +1,13 @@
 const midtransClient = require("midtrans-client");
+
 const crypto = require("crypto");
 const Payment = require("../db/models/payment");
+const Booking = require("../db/models/booking");
+const User = require("../db/models/user");
+const Bicycle = require("../db/models/bicycle");
+var QRCode = require("qrcode");
+const formatDate = require("../utils/formatDate");
+const formatIDR = require("../utils/formatIDR");
 
 const GetTransactionToken = (req, res) => {
   let snap = new midtransClient.Snap({
@@ -32,14 +39,31 @@ const GetTransactionToken = (req, res) => {
 
 const DetailPayment = async (req, res) => {
   try {
-    return res
-      .status(200)
-      .render("detail-payment", {
-        layout: "layouts/main",
-        title: "Payment Detail",
-        user: req.user,
-        path: req.path,
-      });
+    const { booking_id } = req.params;
+    const data = await Booking.findOne({
+      where: { booking_id },
+      raw: true,
+      include: [
+        { model: User, as: "user" },
+        { model: Bicycle, as: "bicycle" },
+      ],
+    });
+    const url = `${req.protocol}://${req.get("host")}/confirm/${booking_id}`;
+    const generateQR = await QRCode.toFile("public/assets/img/qrcode.png", url, {
+      width: 200,
+    });
+
+    const formatBookingDate = formatDate(data.booking_date, true);
+    const formatTotalAmountToIDR = formatIDR(data.total_amount, false);
+    const newData = { ...data, formatBookingDate, formatTotalAmountToIDR };
+    console.log(data);
+    return res.status(200).render("detail-payment", {
+      layout: "layouts/main",
+      title: "Payment Detail",
+      user: req.user,
+      path: req.path,
+      data: newData,
+    });
   } catch (error) {
     console.log(error);
   }
@@ -116,4 +140,60 @@ const TransactionNotification = async (req, res) => {
   }
 };
 
-module.exports = { GetTransactionToken, TransactionNotification, DetailPayment };
+// admin
+const GetPayments = async (req, res) => {
+  try {
+    const payments = await Payment.findAll({ raw: true });
+    return res.status(200).render("admin/payments", {
+      layout: "layouts/main",
+      title: "Rental Bike | Payments",
+      path: req.path,
+      user: req.user,
+      data: payments,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const ConfirmPayment = async (req, res) => {
+  try {
+    const { booking_id } = req.params;
+    const payment = await Payment.findOne({ where: { booking_id }, raw: true });
+    console.log(payment);
+    return res.status(200).render("admin/confirm-payment", {
+      layout: "layouts/main",
+      title: "Rental Bike | Confirm Payment",
+      path: "/payments",
+      user: req.user,
+      data: payment,
+      formData: req.body,
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+const UpdatePayment = async (req, res) => {
+  try {
+    const { status, payment_date, booking_id } = req.body;
+    const updated = await Payment.update(
+      { payment_date, status },
+      { where: { booking_id } }
+    );
+    console.log({ updated });
+    req.flash("errors", [{ success: true, msg: "Successfully, Payment Updated!" }]);
+    return res.redirect("/payments");
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  GetTransactionToken,
+  TransactionNotification,
+  DetailPayment,
+  GetPayments,
+  ConfirmPayment,
+  UpdatePayment,
+};
