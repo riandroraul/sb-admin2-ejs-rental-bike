@@ -15,6 +15,7 @@ const errorResult = (error, res, statusCode, path) => {
         return res.status(statusCode).render("signup", {
           layout: "public-pages/main",
           title,
+          formData: req.body,
           errors: [{ success: false, msg: error.message }],
         });
       case "forgot-password":

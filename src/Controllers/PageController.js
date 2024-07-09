@@ -17,6 +17,7 @@ const LoginView = (req, res) => {
     layout: "public-pages/main",
     title: "Rental Bike | Login",
     formData: req.body,
+    errors: [],
   });
 };
 
@@ -25,6 +26,7 @@ const SignupView = (req, res) => {
     layout: "public-pages/main",
     title: "Rental Bike | Registration",
     formData: req.body,
+    errors: [],
   });
 };
 

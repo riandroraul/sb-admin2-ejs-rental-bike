@@ -8,12 +8,15 @@ const Register = async (req, res) => {
     const checkUser = await User.findOne({ where: { email } });
 
     if (checkUser) {
-      const error = new Error("User with given email already exist");
-      return errorResult(error, res, 400, req.path);
-    }
-
-    if (password != password2) {
-      throw new Error("password and repeat password must be same!");
+      req.flash("errors", [
+        { success: false, msg: "User with given email already exist" },
+      ]);
+      return res.status(400).render("signup", {
+        layout: "public-pages/main",
+        title: "Rental Bike | Login",
+        formData: req.body,
+        errors: [{ success: false, msg: "User with given email already exist" }],
+      });
     }
 
     const userCreated = await User.create({
@@ -31,7 +34,8 @@ const Register = async (req, res) => {
       errors: [{ success: true, msg: "Create account Successfully" }],
     });
   } catch (error) {
-    return errorResult(error, res, 400);
+    console.log(error);
+    // return errorResult(error, res, 400);
   }
 };
 
@@ -42,13 +46,20 @@ const Login = async (req, res) => {
       where: { email },
     });
 
-    if (!userExist) {
-      throw new Error("user not found");
-    }
-
     const checkPassword = await comparePassword(password, userExist.password);
-    if (!checkPassword) {
-      throw new Error("Invalid email or password, please try again!");
+
+    if (!userExist || !checkPassword) {
+      req.flash("errors", [
+        { success: false, msg: "Invalid email or password, please try again!" },
+      ]);
+      return res.status(400).render("login", {
+        layout: "public-pages/main",
+        title: "Rental Bike | Login",
+        formData: req.body,
+        errors: [
+          { success: false, msg: "Invalid email or password, please try again!" },
+        ],
+      });
     }
 
     const token = userExist.generateAccessJwt();
@@ -62,7 +73,7 @@ const Login = async (req, res) => {
     req.flash("errors", [{ success: true, msg: "Login Successfully" }]);
     res.redirect("/main");
   } catch (error) {
-    return errorResult(error, res, 401, req.path);
+    console.log(error);
   }
 };
 
