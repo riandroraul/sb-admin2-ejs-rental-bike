@@ -2,6 +2,17 @@
   <!-- Page Heading -->
   <div class="d-sm-flex align-items-center justify-content-between mb-4">
     <h1 class="h3 mb-0 text-gray-800">Admin Dashboard</h1>
+    <% if(errors.length > 0) { %> <% errors.forEach(function(error) { %>
+    <div
+      class="alert alert-<%= error.success == true ? 'success' : 'danger' %> col-lg-6 alert-dismissible fade show"
+      role="alert"
+    >
+      <%= error.msg %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% }) %> <% } %>
   </div>
 
   <!-- Content Row -->
@@ -12,10 +23,12 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
+              <div
+                class="text-xs font-weight-bold text-primary text-uppercase mb-1"
+              >
                 Total Rentals
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">150</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">15</div>
             </div>
           </div>
         </div>
@@ -28,10 +41,14 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
+              <div
+                class="text-xs font-weight-bold text-success text-uppercase mb-1"
+              >
                 Total Revenue
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">$45,000</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">
+                IDR 1.250.000
+              </div>
             </div>
           </div>
         </div>
@@ -44,10 +61,12 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
+              <div
+                class="text-xs font-weight-bold text-warning text-uppercase mb-1"
+              >
                 Low Inventory
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">5 Bikes</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">10 Bikes</div>
             </div>
           </div>
         </div>
@@ -60,10 +79,12 @@
         <div class="card-body">
           <div class="row no-gutters align-items-center">
             <div class="col mr-2">
-              <div class="text-xs font-weight-bold text-danger text-uppercase mb-1">
+              <div
+                class="text-xs font-weight-bold text-danger text-uppercase mb-1"
+              >
                 Pending Requests
               </div>
-              <div class="h5 mb-0 font-weight-bold text-gray-800">18</div>
+              <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
             </div>
           </div>
         </div>
@@ -79,7 +100,9 @@
           <h6 class="m-0 font-weight-bold text-primary">User Management</h6>
         </div>
         <div class="card-body">
-          <p>List of users with options to view, edit, and delete user information.</p>
+          <p>
+            List of users with options to view, edit, and delete user information.
+          </p>
         </div>
       </div>
     </div>

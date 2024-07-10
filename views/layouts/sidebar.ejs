@@ -3,7 +3,10 @@
   id="accordionSidebar"
 >
   <!-- Sidebar - Brand -->
-  <a class="sidebar-brand d-flex align-items-center justify-content-center" href="/main">
+  <a
+    class="sidebar-brand d-flex align-items-center justify-content-center"
+    href="/main"
+  >
     <div class="sidebar-brand-icon rotate-n-15">
       <i class="fas fa-bicycle"></i>
     </div>
@@ -44,16 +47,18 @@
   </li>
   <li class="nav-item <%= path == '/booking-list' ? 'active' : '' %>">
     <a class="nav-link" href="/booking-list">
-      <i class="fas fa-fw fa-money-bill"></i>
+      <i class="fas fa-fw fa-book-open"></i>
       <span>Booking list</span>
     </a>
   </li>
+  <% if(user.role == 1) { %>
   <li class="nav-item <%= path == '/payments' ? 'active' : '' %>">
     <a class="nav-link" href="/payments">
       <i class="fas fa-fw fa-money-bill"></i>
       <span>Payments</span>
     </a>
   </li>
+  <% } %>
 
   <!-- Divider -->
 

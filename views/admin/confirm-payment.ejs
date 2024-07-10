@@ -3,7 +3,7 @@
   <h1 class="h3 mb-4 text-gray-800">Update Payment</h1>
 
   <!-- Card with Form -->
-  <div class="card shadow mb-4 col-6">
+  <div class="card shadow mb-4 col-md col-lg-6 col-sm">
     <div class="card-header py-3">
       <h6 class="m-0 font-weight-bold text-primary">Update Payment</h6>
     </div>
@@ -37,28 +37,48 @@
               >Payment Status</label
             >
           </div>
-          <select class="custom-select" name="status" id="inputGroupSelect01">
-            <option selected><%= data.status == undefined ? 'UNPAID' : 'PAID' %></option>
+          <select
+            class="custom-select <%= errors.find(e => e.path === 'status') ? 'is-invalid' : '' %>"
+            name="status"
+            id="inputGroupSelect01"
+          >
+            <option selected><%= formData.status || '' %></option>
             <option value="UNPAID">UNPAID</option>
             <option value="PAID">PAID</option>
           </select>
+          <% if (errors.find(e => e.path === 'status')) { %>
+          <div id="bike" class="invalid-feedback">
+            <%= errors.find(e => e.path === 'status').msg %>
+          </div>
+          <% } %>
         </div>
         <div class="form-group">
           <label for="payment_date">Payment Date</label>
-          <input type="date" class="form-control" id="payment_date" name="payment_date" />
+          <input
+            type="date"
+            class="form-control <%= errors.find(e => e.path === 'payment_date') ? 'is-invalid' : '' %>"
+            id="payment_date"
+            name="payment_date"
+            value="<%= formData.payment_date || '' %>"
+          />
+          <% if (errors.find(e => e.path === 'payment_date')) { %>
+          <div id="bike" class="invalid-feedback">
+            <%= errors.find(e => e.path === 'payment_date').msg %>
+          </div>
+          <% } %>
         </div>
         <div class="form-group">
-          <label for="paymentAmount">Payment Amount</label>
+          <label for="payment_amount">Payment Amount</label>
           <input
             type="number"
             class="form-control"
-            id="paymentAmount"
-            name="paymentAmount"
+            id="payment_amount"
+            name="payment_amount"
             value="<%= data.total_amount %>"
             readonly
           />
         </div>
-        <button class="btn btn-danger">Cancel</button>
+        <a href="/payments" class="btn btn-danger">Cancel</a>
         <button type="submit" class="btn btn-primary">Update Payment</button>
       </form>
     </div>

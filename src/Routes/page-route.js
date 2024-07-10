@@ -15,6 +15,8 @@ const {
   GetPayments,
   UpdatePayment,
 } = require("../Controllers/PaymentController");
+const PaymentValidator = require("../auth/payment-validation");
+const ValidationMiddleware = require("../Middleware/ValidationMiddleware");
 
 const router = Router();
 
@@ -28,9 +30,16 @@ router.get("/main", Verify, MainView);
 
 router.get("/add-bike", Verify, VerifyIsAdmin, AddBikeView);
 
+// payment route
 router.get("/payment-detail/:booking_id", Verify, DetailPayment);
 
 router.get("/payments", Verify, VerifyIsAdmin, GetPayments);
-router.post("/update-payment", Verify, VerifyIsAdmin, UpdatePayment);
+router.post(
+  "/update-payment",
+  Verify,
+  VerifyIsAdmin,
+  [PaymentValidator.ConfirmPayment, ValidationMiddleware],
+  UpdatePayment
+);
 
 module.exports = router;

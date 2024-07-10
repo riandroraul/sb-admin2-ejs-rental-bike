@@ -49,13 +49,17 @@ User.init(
     createdAt: {
       type: DataTypes.DATE,
       get() {
-        return dayjs(this.getDataValue("createdAt")).format("D MMMM YYYY HH:mm:ss");
+        return dayjs(this.getDataValue("createdAt")).format(
+          "D MMMM YYYY HH:mm:ss"
+        );
       },
     },
     updatedAt: {
       type: DataTypes.DATE,
       get() {
-        return dayjs(this.getDataValue("updatedAt")).format("D MMMM YYYY HH:mm:ss");
+        return dayjs(this.getDataValue("updatedAt")).format(
+          "D MMMM YYYY HH:mm:ss"
+        );
       },
     },
   },

@@ -9,13 +9,12 @@ const GetBookings = async (req, res) => {
   try {
     const { userId } = req.user;
     const bookings = await Booking.findAll({
-      where: { userId },
+      where: { userId: parseInt(userId) },
       include: [{ model: Bicycle, as: "bicycle" }],
       raw: true,
     });
     bookings.map((el) => (el.booking_date = formatDate(el.booking_date, true)));
     bookings.map((el) => (el.total_amount = formatIDR(el.total_amount, false)));
-    console.log(bookings);
     return res.status(200).render("booking-list", {
       layout: "layouts/main",
       title: "Rental Bike | Booking List",
@@ -31,7 +30,8 @@ const GetBookings = async (req, res) => {
 const CreateBooking = async (req, res) => {
   try {
     console.log(req.body);
-    let { userId, bike_id, booking_date, time_start, time_end, total_amount } = req.body;
+    let { userId, bike_id, booking_date, time_start, time_end, total_amount } =
+      req.body;
     const totalAmountToNumber = total_amount.replace(/[IDR\s,.]/g, "");
     const data = {
       userId,
@@ -59,4 +59,19 @@ const CreateBooking = async (req, res) => {
   }
 };
 
-module.exports = { CreateBooking, GetBookings };
+const DeleteBookingAndPayment = async (req, res) => {
+  try {
+    const { booking_id } = req.params;
+    const paymentDeleted = await Payment.destroy({ where: { booking_id } });
+    const bookingDeleted = await Booking.destroy({ where: { booking_id } });
+    console.log({ paymentDeleted, bookingDeleted });
+    req.flash("errors", [
+      { success: true, msg: "Data Booking Deleted Successfully" },
+    ]);
+    return res.status(200).json({ msg: "Data booking deleted!" });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { CreateBooking, GetBookings, DeleteBookingAndPayment };
