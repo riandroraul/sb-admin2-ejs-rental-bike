@@ -9,7 +9,12 @@ const VerifyIsAdmin = require("../Middleware/VerifyIsAdmin");
 const BikeValidation = require("../auth/bike-validation");
 const ValidationMiddleware = require("../Middleware/ValidationMiddleware");
 const bookingValidation = require("../auth/booking-validation");
-const { CreateBooking, GetBookings } = require("../Controllers/BookingController");
+const {
+  CreateBooking,
+  GetBookings,
+  DeleteBookingAndPayment,
+} = require("../Controllers/BookingController");
+const { route } = require("./main-route");
 
 const router = Router();
 
@@ -33,4 +38,5 @@ router.post(
   CreateBooking
 );
 
+router.delete("/delete-booking/:booking_id", Verify, DeleteBookingAndPayment);
 module.exports = router;

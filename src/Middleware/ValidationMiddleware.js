@@ -1,5 +1,6 @@
 const { validationResult } = require("express-validator");
 const Bicycle = require("../db/models/bicycle");
+const Payment = require("../db/models/payment");
 
 const ValidationMiddleware = async (req, res, next) => {
   const errors = validationResult(req);
@@ -33,7 +34,6 @@ const ValidationMiddleware = async (req, res, next) => {
         });
       case "add-new-bike":
         title = "Rental Bike | Add New Bike";
-        console.log(req.body);
         return res.status(422).render("admin/add-bike", {
           layout: "layouts/main",
           title,
@@ -44,7 +44,6 @@ const ValidationMiddleware = async (req, res, next) => {
         });
       case "book-now":
         title = "Rental Bike | Add New Bike";
-        console.log(req.body);
         const bike = await Bicycle.findOne({
           where: { bike_id: parseInt(req.body.bike_id) },
           raw: true,
@@ -55,6 +54,22 @@ const ValidationMiddleware = async (req, res, next) => {
           bike,
           formData: req.body,
           path: "/bikes",
+          user: req.user,
+          errors: errors.array(),
+        });
+      case "update-payment":
+        title = "Rental Bike | Confirm Payment";
+        const { booking_id } = req.body;
+        const payment = await Payment.findOne({
+          where: { booking_id },
+          raw: true,
+        });
+        return res.status(422).render("admin/confirm-payment", {
+          layout: "layouts/main",
+          title,
+          formData: req.body,
+          data: payment,
+          path: "/payments",
           user: req.user,
           errors: errors.array(),
         });

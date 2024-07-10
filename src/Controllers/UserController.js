@@ -46,12 +46,30 @@ const Login = async (req, res) => {
       where: { email },
     });
 
+    if (!userExist) {
+      return res.status(400).render("login", {
+        layout: "public-pages/main",
+        title: "Rental Bike | Login",
+        formData: req.body,
+        errors: [
+          { success: false, msg: "Invalid email or password, please try again!" },
+        ],
+      });
+    }
     const checkPassword = await comparePassword(password, userExist.password);
 
-    if (!userExist || !checkPassword) {
-      req.flash("errors", [
-        { success: false, msg: "Invalid email or password, please try again!" },
-      ]);
+    if (checkPassword == false) {
+      return res.status(400).render("login", {
+        layout: "public-pages/main",
+        title: "Rental Bike | Login",
+        formData: req.body,
+        errors: [
+          { success: false, msg: "Invalid email or password, please try again!" },
+        ],
+      });
+    }
+
+    if (!userExist && checkPassword == false) {
       return res.status(400).render("login", {
         layout: "public-pages/main",
         title: "Rental Bike | Login",

@@ -52,7 +52,10 @@ const DetailPayment = async (req, res) => {
     const generateQR = await QRCode.toFile("public/assets/img/qrcode.png", url, {
       width: 200,
     });
-    const dataPayment = await Payment.findOne({ where: { booking_id }, raw: true });
+    const dataPayment = await Payment.findOne({
+      where: { booking_id },
+      raw: true,
+    });
 
     const formatBookingDate = formatDate(data.booking_date, true);
     const formatTotalAmountToIDR = formatIDR(data.total_amount, false);
@@ -90,7 +93,9 @@ const TransactionNotification = async (req, res) => {
 
       const hash = crypto
         .createHash("sha512")
-        .update(`${orderId}${statusCode}${grossAmount}${process.env.MT_SERVER_KEY}`);
+        .update(
+          `${orderId}${statusCode}${grossAmount}${process.env.MT_SERVER_KEY}`
+        );
 
       if (statusResponse.signature_key !== hash) {
         return {
@@ -162,7 +167,6 @@ const ConfirmPayment = async (req, res) => {
   try {
     const { booking_id } = req.params;
     const payment = await Payment.findOne({ where: { booking_id }, raw: true });
-    console.log(payment);
     return res.status(200).render("admin/confirm-payment", {
       layout: "layouts/main",
       title: "Rental Bike | Confirm Payment",
@@ -184,7 +188,9 @@ const UpdatePayment = async (req, res) => {
       { where: { booking_id } }
     );
     console.log({ updated });
-    req.flash("errors", [{ success: true, msg: "Successfully, Payment Updated!" }]);
+    req.flash("errors", [
+      { success: true, msg: "Successfully, Payment Updated!" },
+    ]);
     return res.redirect("/payments");
   } catch (error) {
     console.log(error);
