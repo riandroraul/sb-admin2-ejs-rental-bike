@@ -41,7 +41,7 @@
                       name="email"
                       aria-describedby="emailHelp"
                       placeholder="Enter Email Address..."
-                      value="<%= formData.email ? formData.email : '' %>"
+                      value="<%= formData.email || '' %>"
                     />
                     <% if (errors.find(e => e.path === 'email')) { %>
                     <div id="bike" class="invalid-feedback">
