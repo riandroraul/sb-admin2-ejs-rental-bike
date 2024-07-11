@@ -8,8 +8,7 @@
           <div class="p-5">
             <div class="text-center">
               <h1 class="h4 text-gray-900 mb-4">Create an Account</h1>
-              <% if(typeof errors !== 'undefined') { %> <% if(errors[0].type !==
-              'field') { %>
+              <% if(errors.length > 0) { %> <% if(errors[0].type !== 'field') { %>
               <div
                 class="alert alert-<%= errors[0].success == true ? 'success' : 'danger' %> alert-dismissible fade show"
                 role="alert"
@@ -24,6 +23,7 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
               </div>
+
               <% } %> <% } %>
             </div>
             <form id="form" class="user" action="/register" method="post">
@@ -34,7 +34,7 @@
                   id="name"
                   placeholder="full name"
                   name="name"
-                  value="<%= formData.name ? formData.name : '' %>"
+                  value="<%= formData.name || '' %>"
                 />
                 <% if (errors.find(e => e.path === 'name')) { %>
                 <div id="bike" class="invalid-feedback">
@@ -49,7 +49,7 @@
                   id="email"
                   name="email"
                   placeholder="Email Address"
-                  value="<%= formData.email ? formData.email : '' %>"
+                  value="<%= formData.email || '' %>"
                 />
                 <% if (errors.find(e => e.path === 'email')) { %>
                 <div id="bike" class="invalid-feedback">

@@ -21,6 +21,7 @@ const GetBookings = async (req, res) => {
       path: "/booking-list",
       bookings,
       user: req.user,
+      formData: req.body,
     });
   } catch (error) {
     console.log(error);

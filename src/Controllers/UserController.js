@@ -26,11 +26,12 @@ const Register = async (req, res) => {
       role: Number(process.env.ROLE_USER),
     });
 
-    const response = responseSuccess(true, 201, "new user created", userCreated);
+    // const response = responseSuccess(true, 201, "new user created", userCreated);
     res.render("login", {
       layout: "public-pages/main",
       title: "Rental Bike | Login",
-      data: response,
+      data: userCreated,
+      formData: req.body,
       errors: [{ success: true, msg: "Create account Successfully" }],
     });
   } catch (error) {
