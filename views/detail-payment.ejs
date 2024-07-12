@@ -19,12 +19,29 @@
               <p><strong>Booking Date:</strong> <%= data.formatBookingDate %></p>
               <p><strong>Time Start:</strong> <%= data.time_start %></p>
               <p><strong>Time End:</strong> <%= data.time_end %></p>
-              <p><strong>Total Amount:</strong> <%= data.formatTotalAmountToIDR %></p>
+              <p>
+                <strong>Total Amount:</strong> <%= data.formatTotalAmountToIDR %>
+              </p>
             </div>
             <div class="col-md-6">
               <div class="text-center">
-                <img id="barcode" style="border: 1px solid #000" src="/img/qrcode.png" />
+                <img
+                  id="barcode"
+                  style="border: 1px solid #000; margin: 10px"
+                  src="/img/qrcode.png"
+                />
               </div>
+            </div>
+            <div class="row m-auto mt-5">
+              <% if (payment.rental_status === 'RETURNED') { %>
+              <div class="alert alert-success text-center" role="alert">
+                <strong>Rental Status:</strong> <%= payment.rental_status %>
+              </div>
+              <% } else { %>
+              <div class="alert alert-danger text-center" role="alert">
+                <strong>Rental Status:</strong> <%= payment.rental_status %>
+              </div>
+              <% } %>
             </div>
           </div>
         </div>
@@ -52,12 +69,15 @@
           <span
             class="status-icon <%= payment.status == 'PAID' ? 'paid-icon' : 'unpaid-icon' %> mx-3"
           >
-            <i class="fas fa-<%= payment.status == 'PAID' ? 'check' : 'times' %>"></i>
+            <i
+              class="fas fa-<%= payment.status == 'PAID' ? 'check' : 'times' %>"
+            ></i>
             <!-- Check icon for Paid -->
           </span>
           <% if(payment.status == 'PAID') { %>
           <p class="align-items-center">
-            Your payment is <strong>Paid</strong>. Thank you for completing your payment.
+            Your payment is <strong>Paid</strong>. Thank you for completing your
+            payment.
           </p>
           <% } else { %>
           <p class="align-items-center">

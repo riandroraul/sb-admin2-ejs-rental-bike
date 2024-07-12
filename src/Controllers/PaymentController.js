@@ -167,6 +167,7 @@ const ConfirmPayment = async (req, res) => {
   try {
     const { booking_id } = req.params;
     const payment = await Payment.findOne({ where: { booking_id }, raw: true });
+    console.log(payment);
     return res.status(200).render("admin/confirm-payment", {
       layout: "layouts/main",
       title: "Rental Bike | Confirm Payment",
@@ -182,12 +183,11 @@ const ConfirmPayment = async (req, res) => {
 
 const UpdatePayment = async (req, res) => {
   try {
-    const { status, payment_date, booking_id } = req.body;
+    const { status, rental_status, payment_date, booking_id } = req.body;
     const updated = await Payment.update(
-      { payment_date, status },
+      { payment_date, status, rental_status },
       { where: { booking_id } }
     );
-    console.log({ updated });
     req.flash("errors", [
       { success: true, msg: "Successfully, Payment Updated!" },
     ]);
