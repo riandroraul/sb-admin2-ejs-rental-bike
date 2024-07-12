@@ -8,6 +8,7 @@ const MainView = (req, res) => {
     user,
     member_since: formatDate(user.member_since),
     path: "/main",
+    formData: req.body,
     title: "Rental Bike | Dashboard",
   });
 };

@@ -28,6 +28,10 @@ Payment.init(
     payment_date: {
       type: DataTypes.DATE,
     },
+    rental_status: {
+      type: DataTypes.STRING,
+      defaultValue: "NOT RETURNED",
+    },
     payment_method: {
       type: DataTypes.STRING,
     },

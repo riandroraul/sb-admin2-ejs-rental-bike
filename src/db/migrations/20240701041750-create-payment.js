@@ -25,6 +25,9 @@ module.exports = {
       payment_date: {
         type: Sequelize.DATE,
       },
+      rental_status: {
+        type: Sequelize.STRING,
+      },
       payment_method: {
         type: Sequelize.STRING,
       },
