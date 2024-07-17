@@ -75,6 +75,16 @@ const AddBikeView = (req, res) => {
   });
 };
 
+const UpdateProfilePage = (req, res) => {
+  res.render("edit-profile", {
+    layout: "layouts/main",
+    title: "Rental Bike | Update Profile",
+    user: req.user,
+    path: req.path,
+    formData: {},
+  });
+};
+
 module.exports = {
   MainView,
   LoginView,
@@ -85,4 +95,5 @@ module.exports = {
   sentJson,
   BikesView,
   AddBikeView,
+  UpdateProfilePage,
 };

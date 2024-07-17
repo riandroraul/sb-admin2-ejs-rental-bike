@@ -73,6 +73,17 @@ const ValidationMiddleware = async (req, res, next) => {
           user: req.user,
           errors: errors.array(),
         });
+      case "update-profile":
+        title = "Rental Bike | Update Profile";
+        console.log(errors.array());
+        return res.status(422).render("edit-profile", {
+          layout: "layouts/main",
+          title,
+          formData: req.body,
+          path: req.path,
+          user: req.user,
+          errors: errors.array(),
+        });
     }
   }
   next();

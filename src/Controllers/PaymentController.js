@@ -60,7 +60,6 @@ const DetailPayment = async (req, res) => {
     const formatBookingDate = formatDate(data.booking_date, true);
     const formatTotalAmountToIDR = formatIDR(data.total_amount, false);
     const newData = { ...data, formatBookingDate, formatTotalAmountToIDR };
-    console.log(dataPayment);
     return res.status(200).render("detail-payment", {
       layout: "layouts/main",
       title: "Payment Detail",

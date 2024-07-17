@@ -126,4 +126,12 @@ const DeleteUser = async (req, res) => {
   }
 };
 
-module.exports = { Register, Login, GetUsers, DeleteUser };
+const UpdateProfile = async (req, res) => {
+  try {
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = { Register, Login, GetUsers, DeleteUser, UpdateProfile };
