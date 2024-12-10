@@ -1,0 +1,84 @@
+<!-- Begin Page Content -->
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <div class="d-sm-flex align-items-center justify-content-between mx-5 mb-4">
+    <h1 class="h3 mb-0 text-gray-800">Daftar Sepeda</h1>
+    <% if(errors.length > 0) { %> <% errors.forEach(function(error) { %>
+    <div
+      class="alert alert-<%= error.success == true ? 'success' : 'danger' %> col-lg-6 alert-dismissible fade show"
+      role="alert"
+    >
+      <%= error.msg %>
+      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <% }) %> <% } %> <% if(user.role === 1) {%>
+    <a href="/add-bike" class="btn btn-primary btn-icon-split btn-md">
+      <span class="icon text-white-50">
+        <i class="fas fa-plus"></i>
+      </span>
+      <span class="text">Add New Bike</span>
+    </a>
+    <% } %>
+  </div>
+
+  <!-- Content Row -->
+
+  <div class="row justify-content-around">
+    <% if(bikes.length > 0) { %> <% bikes.forEach(function(bike) { %>
+    <div class="card shadow col-lg-5 mx-1 mb-4">
+      <!-- image 200 x 150 px -->
+      <img src="<%= bike.url_image %>" class="card-img-top" alt="Sepeda 1" />
+      <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary"><%= bike.bike_name %></h6>
+        <p class="m-0"><%= bike.formattedPrice %></p>
+      </div>
+      <div class="card-body">
+        <a href="/bike/<%= bike.bike_id %>" class="btn btn-rent btn-block">
+          Checkout <i class="fas fa-arrow-right ml-2"></i>
+        </a>
+      </div>
+    </div>
+    <% }) %> <% } else { %>
+    <div class="col-12 text-center">
+      <p>No data available</p>
+    </div>
+    <% } %>
+  </div>
+  <!-- Pagination Controls -->
+  <% if(bikes.length > 0) { %>
+  <nav aria-label="Page navigation example" class="mt-4">
+    <ul class="pagination justify-content-center">
+      <% if (currentPage > 1) { %>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/bikes?page=<%= currentPage - 1 %>&limit=<%= limit %>"
+          aria-label="Previous"
+        >
+          <span aria-hidden="true">&laquo;</span>
+          <span class="sr-only">Previous</span>
+        </a>
+      </li>
+      <% } %> <% for (let i = 1; i <= totalPages; i++) { %>
+      <li class="page-item <%= currentPage === i ? 'active' : '' %>">
+        <a class="page-link" href="/bikes?page=<%= i %>&limit=<%= limit %>"><%= i %></a>
+      </li>
+      <% } %> <% if (currentPage < totalPages) { %>
+      <li class="page-item">
+        <a
+          class="page-link"
+          href="/bikes?page=<%= currentPage + 1 %>&limit=<%= limit %>"
+          aria-label="Next"
+        >
+          <span aria-hidden="true">&raquo;</span>
+          <span class="sr-only">Next</span>
+        </a>
+      </li>
+      <% } %>
+    </ul>
+  </nav>
+  <% } %>
+</div>
+<!-- /.container-fluid -->

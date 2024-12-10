@@ -8,12 +8,15 @@ const Register = async (req, res) => {
     const checkUser = await User.findOne({ where: { email } });
 
     if (checkUser) {
-      const error = new Error("User with given email already exist");
-      return errorResult(error, res, 400, req.path);
-    }
-
-    if (password != password2) {
-      throw new Error("password and repeat password must be same!");
+      req.flash("errors", [
+        { success: false, msg: "User with given email already exist" },
+      ]);
+      return res.status(400).render("signup", {
+        layout: "public-pages/main",
+        title: "Rental Bike | Login",
+        formData: req.body,
+        errors: [{ success: false, msg: "User with given email already exist" }],
+      });
     }
 
     const userCreated = await User.create({
@@ -23,15 +26,17 @@ const Register = async (req, res) => {
       role: Number(process.env.ROLE_USER),
     });
 
-    const response = responseSuccess(true, 201, "new user created", userCreated);
+    // const response = responseSuccess(true, 201, "new user created", userCreated);
     res.render("login", {
       layout: "public-pages/main",
       title: "Rental Bike | Login",
-      data: response,
+      data: userCreated,
+      formData: req.body,
       errors: [{ success: true, msg: "Create account Successfully" }],
     });
   } catch (error) {
-    return errorResult(error, res, 400);
+    console.log(error);
+    // return errorResult(error, res, 400);
   }
 };
 
@@ -43,30 +48,82 @@ const Login = async (req, res) => {
     });
 
     if (!userExist) {
-      throw new Error("user not found");
+      return res.status(400).render("login", {
+        layout: "public-pages/main",
+        title: "Rental Bike | Login",
+        formData: req.body,
+        errors: [
+          { success: false, msg: "Invalid email or password, please try again!" },
+        ],
+      });
+    }
+    const checkPassword = await comparePassword(password, userExist.password);
+
+    if (checkPassword == false) {
+      return res.status(400).render("login", {
+        layout: "public-pages/main",
+        title: "Rental Bike | Login",
+        formData: req.body,
+        errors: [
+          { success: false, msg: "Invalid email or password, please try again!" },
+        ],
+      });
     }
 
-    const checkPassword = await comparePassword(password, userExist.password);
-    if (!checkPassword) {
-      throw new Error("Invalid email or password, please try again!");
+    if (!userExist && checkPassword == false) {
+      return res.status(400).render("login", {
+        layout: "public-pages/main",
+        title: "Rental Bike | Login",
+        formData: req.body,
+        errors: [
+          { success: false, msg: "Invalid email or password, please try again!" },
+        ],
+      });
     }
 
     const token = userExist.generateAccessJwt();
     let options = {
-      maxAge: 20 * 60 * 1000, // would expire in 20minutes
+      maxAge: 24 * 60 * 60 * 1000, // would expire in 1 day, 1s = 1000ms
       httpOnly: true, // The cookie is only accessible by the web server
       secure: true,
       sameSite: "None",
     };
     res.cookie("SessionID", token, options);
-    res.render("home", {
-      layout: "layouts/main",
-      title: "Rental Bike",
-      errors: [{ success: true, msg: "Login Successfully" }],
-    });
+    req.flash("errors", [{ success: true, msg: "Login Successfully" }]);
+    res.redirect("/main");
   } catch (error) {
-    return errorResult(error, res, 401, req.path);
+    console.log(error);
   }
 };
 
-module.exports = { Register, Login };
+const GetUsers = async (req, res) => {
+  try {
+    const users = await User.findAll({
+      where: { role: 2 },
+      attributes: ["userId", "name", "email", "role", "createdAt", "updatedAt"],
+      raw: true,
+    });
+    return res.render("admin/users", {
+      layout: "layouts/main",
+      title: "Rental Bike | Users",
+      path: "/users",
+      user: req.user,
+      data: users,
+    });
+  } catch (error) {
+    return errorResult(error, res, 400, req.path);
+  }
+};
+
+const DeleteUser = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    await User.destroy({ where: { userId } });
+    req.flash("errors", [{ success: true, msg: "User Deleted Successfully" }]);
+    return res.status(200).json({ msg: "User Deleted Successfully" });
+  } catch (error) {
+    return errorResult(error, res, 400, req.path);
+  }
+};
+
+module.exports = { Register, Login, GetUsers, DeleteUser };

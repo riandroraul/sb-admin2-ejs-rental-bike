@@ -15,6 +15,7 @@ const errorResult = (error, res, statusCode, path) => {
         return res.status(statusCode).render("signup", {
           layout: "public-pages/main",
           title,
+          formData: req.body,
           errors: [{ success: false, msg: error.message }],
         });
       case "forgot-password":
@@ -22,6 +23,15 @@ const errorResult = (error, res, statusCode, path) => {
         return res.status(statusCode).render(pathRender, {
           layout: "public-pages/main",
           title,
+          errors: [{ success: false, msg: error.message }],
+        });
+      case "add-new-bike":
+        title = "Rental Bike | Add new Bike";
+        return res.status(statusCode).render("admin/add-bike", {
+          layout: "layouts/main",
+          title,
+          path: "/bikes",
+          FormData: {},
           errors: [{ success: false, msg: error.message }],
         });
     }

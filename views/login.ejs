@@ -13,7 +13,8 @@
                   <h1 class="h4 text-gray-900 mb-4">Welcome Back!</h1>
                 </div>
 
-                <% if(typeof errors !== 'undefined') { %>
+                <% if(errors.length > 0) { %> <% if(errors[0].type !== 'field') {
+                %>
                 <div
                   class="alert alert-<%= errors[0].success == true ? 'success' : 'danger' %> alert-dismissible fade show"
                   role="alert"
@@ -28,27 +29,39 @@
                     <span aria-hidden="true">&times;</span>
                   </button>
                 </div>
-                <% } %>
+
+                <% } %> <% } %>
 
                 <form class="user" action="/login" method="post">
                   <div class="form-group">
                     <input
                       type="text"
-                      class="form-control form-control-user"
+                      class="form-control form-control-user <%= errors.find(e => e.path === 'email') ? 'is-invalid' : '' %>"
                       id="exampleInputEmail"
                       name="email"
                       aria-describedby="emailHelp"
                       placeholder="Enter Email Address..."
+                      value="<%= formData.email || '' %>"
                     />
+                    <% if (errors.find(e => e.path === 'email')) { %>
+                    <div id="bike" class="invalid-feedback">
+                      <%= errors.find(e => e.path === 'email').msg %>
+                    </div>
+                    <% } %>
                   </div>
                   <div class="form-group">
                     <input
                       type="password"
                       name="password"
-                      class="form-control form-control-user"
+                      class="form-control form-control-user <%= errors.find(e => e.path === 'password') ? 'is-invalid' : '' %>"
                       id="exampleInputPassword"
                       placeholder="Password"
                     />
+                    <% if (errors.find(e => e.path === 'password')) { %>
+                    <div id="bike" class="invalid-feedback">
+                      <%= errors.find(e => e.path === 'password').msg %>
+                    </div>
+                    <% } %>
                   </div>
                   <div class="form-group">
                     <div class="custom-control custom-checkbox small">

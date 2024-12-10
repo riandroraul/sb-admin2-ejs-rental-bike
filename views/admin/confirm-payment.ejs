@@ -1,0 +1,111 @@
+<div class="container-fluid">
+  <!-- Page Heading -->
+  <h1 class="h3 mb-4 text-gray-800">Update Payment</h1>
+
+  <!-- Card with Form -->
+  <div class="card shadow mb-4 col-md col-lg-6 col-sm">
+    <div class="card-header py-3">
+      <h6 class="m-0 font-weight-bold text-primary">Update Payment</h6>
+    </div>
+    <div class="card-body">
+      <form id="updatePaymentForm" action="/update-payment" method="POST">
+        <div class="form-group">
+          <label for="userId">Transaction ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="transaction_id"
+            name="transaction_id"
+            value="<%= data.transaction_id %>"
+            readonly
+          />
+        </div>
+        <div class="form-group">
+          <label for="booking_id">Booking ID</label>
+          <input
+            type="text"
+            class="form-control"
+            id="booking_id"
+            name="booking_id"
+            value="<%= data.booking_id %>"
+            readonly
+          />
+        </div>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01"
+              >Payment Status</label
+            >
+          </div>
+          <select
+            class="custom-select <%= errors.find(e => e.path === 'status') ? 'is-invalid' : '' %>"
+            name="status"
+            id="inputGroupSelect01"
+          >
+            <option selected><%= data.status || formData.status ||'' %></option>
+            <option value="UNPAID">UNPAID</option>
+            <option value="PAID">PAID</option>
+          </select>
+          <% if (errors.find(e => e.path === 'status')) { %>
+          <div id="bike" class="invalid-feedback">
+            <%= errors.find(e => e.path === 'status').msg %>
+          </div>
+          <% } %>
+        </div>
+        <% if(data.status === 'PAID') { %>
+        <div class="input-group mb-3">
+          <div class="input-group-prepend">
+            <label class="input-group-text" for="inputGroupSelect01"
+              >Rental Status</label
+            >
+          </div>
+          <select
+            class="custom-select <%= errors.find(e => e.path === 'rental_status') ? 'is-invalid' : '' %>"
+            name="rental_status"
+            id="inputGroupSelect01"
+          >
+            <option selected>
+              <%= data.rental_status || formData.rental_status || '' %>
+            </option>
+            <option value="RETURNED">RETURNED</option>
+            <option value="NOT RETURNED">NOT RETURNED</option>
+          </select>
+          <% if (errors.find(e => e.path === 'rental_status')) { %>
+          <div id="bike" class="invalid-feedback">
+            <%= errors.find(e => e.path === 'rental_status').msg %>
+          </div>
+          <% } %>
+        </div>
+        <% } %>
+        <div class="form-group">
+          <label for="payment_date">Payment Date</label>
+          <input
+            type="date"
+            class="form-control <%= errors.find(e => e.path === 'payment_date') ? 'is-invalid' : '' %>"
+            id="payment_date"
+            name="payment_date"
+            value="<%= data.payment_date || formData.payment_date || '' %>"
+          />
+          <% if (errors.find(e => e.path === 'payment_date')) { %>
+          <div id="bike" class="invalid-feedback">
+            <%= errors.find(e => e.path === 'payment_date').msg %>
+          </div>
+          <% } %>
+        </div>
+        <div class="form-group">
+          <label for="payment_amount">Payment Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            id="payment_amount"
+            name="payment_amount"
+            value="<%= data.total_amount %>"
+            readonly
+          />
+        </div>
+        <a href="/payments" class="btn btn-danger">Cancel</a>
+        <button type="submit" class="btn btn-primary">Update Payment</button>
+      </form>
+    </div>
+  </div>
+</div>
