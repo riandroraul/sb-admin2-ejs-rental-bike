@@ -81,7 +81,7 @@ const UpdateProfilePage = (req, res) => {
     title: "Rental Bike | Update Profile",
     user: req.user,
     path: req.path,
-    formData: {},
+    formData: req.body,
   });
 };
 

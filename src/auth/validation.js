@@ -55,24 +55,32 @@ module.exports = {
       .isLength({ min: 10 })
       .withMessage("Address must be at least 10 characters long"),
     check("profile_picture").custom((value, { req }) => {
+      console.log({ errorVal: req.error });
+      const error = req.error;
       if (!req.file) {
         throw new Error("Image is required");
       }
+      if (error) {
+        throw new Error(error);
+      }
+      if (error.code == "LIMIT_FILE_SIZE") {
+        throw new Error("File size exceeds the limit of 2MB!");
+      }
 
       // Custom file type and size validation
-      const file = req.file;
-      const filetypes = /jpeg|jpg|png|gif/;
-      const extname = filetypes.test(
-        path.extname(file.originalname).toLowerCase()
-      );
-      const mimetype = filetypes.test(file.mimetype);
-      const maxSize = 1000000; // 1MB
+      // const file = req.file;
+      // const filetypes = /jpeg|jpg|png|gif/;
+      // const extname = filetypes.test(
+      //   path.extname(file.originalname).toLowerCase()
+      // );
+      // const mimetype = filetypes.test(file.mimetype);
+      // const maxSize = 1000000; // 1MB
 
-      if (!mimetype || !extname) {
-        throw new Error("Image extension must be jpg, jpeg, png, gif");
-      } else if (file.size > maxSize) {
-        throw new Error("File size exceeds the limit of 1MB!");
-      }
+      // if (!mimetype || !extname) {
+      //   throw new Error("Image extension must be jpg, jpeg, png, gif");
+      // } else if (file.size > maxSize) {
+      //   throw new Error("File size exceeds the limit of 1MB!");
+      // }
     }),
   ],
 };

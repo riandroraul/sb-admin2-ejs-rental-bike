@@ -1,6 +1,7 @@
 const User = require("../db/models/user");
 const { hashPassword, comparePassword } = require("../utils/password");
 const { responseSuccess, errorResult } = require("../utils/response");
+const upload = require("../utils/uploadFile");
 
 const Register = async (req, res) => {
   try {
@@ -134,4 +135,32 @@ const UpdateProfile = async (req, res) => {
   }
 };
 
-module.exports = { Register, Login, GetUsers, DeleteUser, UpdateProfile };
+const UploadProfileImage = async (req, res) => {
+  try {
+    upload(req, res, function (err) {
+      console.log({ file: req.file });
+      if (err instanceof multer.MulterError) {
+        // A Multer error occurred when uploading.
+        req.error = err;
+        next();
+        console.log({ err, code: err.code });
+      } else if (err) {
+        // An unknown error occurred when uploading.
+        console.log({ elseif: err });
+        req.error = err;
+        next();
+      }
+    });
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+module.exports = {
+  Register,
+  Login,
+  GetUsers,
+  DeleteUser,
+  UpdateProfile,
+  UploadProfileImage,
+};

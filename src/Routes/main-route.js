@@ -1,4 +1,5 @@
 const { Router } = require("express");
+const multer = require("multer");
 const AuthValidation = require("../auth/validation");
 const {
   Register,
@@ -6,6 +7,7 @@ const {
   GetUsers,
   DeleteUser,
   UpdateProfile,
+  UploadProfileImage,
 } = require("../Controllers/UserController");
 const ValidationMiddleware = require("../Middleware/ValidationMiddleware");
 const { sentJson } = require("../Controllers/PageController");
@@ -35,11 +37,8 @@ router.get("/users", Verify, VerifyIsAdmin, GetUsers);
 router.post(
   "/update-profile",
   Verify,
-  [
-    upload.single("profile_picture"),
-    AuthValidation.updateProfile,
-    ValidationMiddleware,
-  ],
+  UploadProfileImage,
+  [(AuthValidation.updateProfile, ValidationMiddleware)],
   UpdateProfile
 );
 
