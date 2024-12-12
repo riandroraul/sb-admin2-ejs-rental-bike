@@ -13,7 +13,7 @@ const bikeRouter = require("./src/Routes/bike-route");
 dotenv.config();
 require("./src/config/db-connect");
 
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 8080;
 const app = express();
 
 app.disable("x-powered-by");

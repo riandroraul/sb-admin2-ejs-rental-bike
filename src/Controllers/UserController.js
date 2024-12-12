@@ -89,7 +89,7 @@ const Login = async (req, res) => {
       sameSite: "None",
     };
     res.cookie("SessionID", token, options);
-    req.flash("errors", [{ success: true, msg: "Login Successfully" }]);
+    req.flash("errors", [{ success: true, msg: "Login Successfully"}]);
     res.redirect("/main");
   } catch (error) {
     console.log(error);

@@ -3,6 +3,7 @@ const formatDate = require("../utils/formatDate");
 const MainView = (req, res) => {
   const user = req.user;
   const view = user.role == 1 ? "admin/dashboard" : "users/dashboard";
+  
   res.render(view, {
     layout: "layouts/main",
     user,
